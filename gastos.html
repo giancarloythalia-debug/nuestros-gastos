@@ -781,12 +781,6 @@
       </div>
       <span id="remoteStatus" style="display:block;font-size:.85rem;margin-top:8px"></span>
     </div>
-    <div class="card" style="margin-bottom:20px">
-      <h3 class="sec-title">💾 Respaldo de datos</h3>
-      <p style="color:var(--muted);font-size:.85rem;margin-bottom:10px">Descargá todos tus datos como archivo JSON. Si algo se borra, este archivo lo restaura.</p>
-      <button class="btn" id="btnExportData">📥 Descargar respaldo (backup.json)</button>
-      <span id="exportMsg" style="display:block;font-size:.85rem;margin-top:8px"></span>
-    </div>
   </div>
 
   <div class="footer">Hecho con 💞 para nuestro hogar · Los datos se guardan solos en el navegador</div>
@@ -2251,24 +2245,6 @@
   document.getElementById('btnRemoteDisconnect').addEventListener('click', function () {
     localStorage.removeItem(REMOTE_KEY);
     disconnectRemote();
-  });
-
-  document.getElementById('btnExportData').addEventListener('click', function () {
-    const msg = document.getElementById('exportMsg');
-    try {
-      const json = JSON.stringify(state, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'backup.json';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      msg.textContent = '✅ Descargado. Guardá el archivo en la carpeta del proyecto.';
-      msg.style.color = 'var(--green)';
-    } catch (e) {
-      msg.textContent = 'Error: ' + e.message;
-      msg.style.color = 'var(--red)';
-    }
   });
 
   document.getElementById('btnPctIgual').addEventListener('click', function () {
