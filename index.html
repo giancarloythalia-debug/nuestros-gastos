@@ -321,6 +321,19 @@
   .pago-table td.gian { color: var(--blue); }
   .pago-table td.thali { color: var(--rose); }
   .pago-table td.comp { color: var(--amber); }
+  .comp-chart { display: flex; align-items: flex-end; gap: 12px; padding: 14px 4px 0; min-height: 160px; }
+  .comp-col { flex: 1; min-width: 50px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .comp-bars { display: flex; align-items: flex-end; gap: 3px; width: 100%; }
+  .comp-bar { flex: 1; border-radius: 4px 4px 0 0; position: relative; min-height: 2px; transition: height .4s ease; }
+  .comp-bar.prev { background: rgba(148,163,184,.35); border: 1px solid rgba(148,163,184,.3); }
+  .comp-bar.curr { background: linear-gradient(180deg, var(--purple), #9333ea); box-shadow: 0 0 8px rgba(147,51,234,.3); }
+  .comp-bar .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; font-size: .66rem; font-weight: 700; padding: 3px 7px; border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s; z-index: 6; }
+  .comp-bar:hover .tip { opacity: 1; }
+  .comp-lbl { font-size: .72rem; color: var(--muted); text-align: center; margin-top: 4px; }
+  .comp-lbl b { display: block; color: var(--text); font-size: .78rem; font-weight: 800; }
+  .comp-legend { display: flex; gap: 16px; padding: 8px 4px; font-size: .78rem; color: var(--muted); }
+  .comp-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .comp-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
   .cuentas-dash { display: flex; align-items: center; gap: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; flex-wrap: wrap; }
   .donut-wrap { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
   .donut { width: 112px; height: 112px; border-radius: 50%; }
@@ -502,15 +515,8 @@
   </div>
 
   <div class="card" style="margin-bottom:16px">
-    <div class="t">📊 Flujo mensual de las cuentas <small id="cuentasChartYear" style="color:var(--muted);font-weight:400"></small></div>
-    <div class="chart-legend">
-      <span><i class="lg in"></i> Ingresos a cuentas (pagos del plan)</span>
-      <span><i class="lg out"></i> Egresos de cuentas (retiros)</span>
-    </div>
-    <div class="chart-flex">
-      <div id="cuentasChart"></div>
-      <div class="cuentas-dash in-card" id="cuentasDash"></div>
-    </div>
+    <div class="t">📊 Gastos por categoría: este mes vs anterior</div>
+    <div id="monthCompChart" style="overflow-x:auto"></div>
   </div>
 
   <div class="tabs">
@@ -1710,6 +1716,7 @@
     fillCuentaSelect();
     renderEgresos();
     renderShared();
+    renderMonthCompChart();
     renderEgresosChart();
     renderSharedChart();
     renderPlan();
@@ -2408,7 +2415,7 @@
         ${open ? renderCuentaDetail(d.c) : ''}
       </div>`;
     }).join('');
-    renderCuentasChart();
+    renderMonthCompChart();
   }
 
   function cuentasFlujoMes(idx) {
@@ -2424,30 +2431,48 @@
     return { ing, eg };
   }
 
-  function renderCuentasChart() {
-    const el = document.getElementById('cuentasChart');
+  function renderMonthCompChart() {
+    const el = document.getElementById('monthCompChart');
     if (!el) return;
-    const lbl = document.getElementById('cuentasChartYear');
-    if (lbl) lbl.textContent = 'año ' + planYear;
-    const data = planYearMonths(planYear).map(x => ({ x, ...cuentasFlujoMes(x.idx) }));
-    const max = Math.max(1, ...data.map(d => Math.max(d.ing, d.eg)));
-    const empty = data.every(d => d.ing === 0 && d.eg === 0);
-    if (empty) {
-      el.innerHTML = '<div class="empty">Aún no hay movimientos entre el plan y las cuentas en ' + planYear + '.</div>';
-      return;
+    const curKey = keyOf(current);
+    const prevM = current.m === 0 ? 11 : current.m - 1;
+    const prevY = current.m === 0 ? current.y - 1 : current.y;
+    const prevKey = prevY + '-' + String(prevM + 1).padStart(2, '0');
+    const allCats = new Set();
+    const currByCat = {}, prevByCat = {};
+    const egProfiles = state.profiles[currentUser] || {};
+    const allEg = [egProfiles.egresos || {}, state.shared.egresos || {}];
+    for (const src of allEg) {
+      for (const e of (src[curKey] || [])) { currByCat[e.cat] = (currByCat[e.cat] || 0) + (Number(e.monto) || 0); allCats.add(e.cat); }
+      for (const e of (src[prevKey] || [])) { prevByCat[e.cat] = (prevByCat[e.cat] || 0) + (Number(e.monto) || 0); allCats.add(e.cat); }
     }
-    el.innerHTML = '<div class="chart-wrap">' + data.map(d => {
-      const ih = Math.max(2, Math.round(d.ing / max * 120));
-      const eh = Math.max(2, Math.round(d.eg / max * 120));
-      const net = d.ing - d.eg;
-      return '<div class="chart-group" title="' + MONTHS[d.x.m - 1] + ' ' + planYear + ' · Ingresos ' + money(d.ing) + ' · Egresos ' + money(d.eg) + ' · Neto ' + money(net) + '">' +
-        '<div class="chart-bars">' +
-        '<div class="chart-bar in" style="height:' + ih + 'px"><span class="tip">+ ' + money(d.ing) + '</span></div>' +
-        '<div class="chart-bar out" style="height:' + eh + 'px"><span class="tip">− ' + money(d.eg) + '</span></div>' +
-        '</div>' +
-        '<div class="chart-mlbl"><b>' + MONTHS[d.x.m - 1].slice(0, 3) + '</b><span class="in">' + fmtNum(d.ing) + '</span><span class="out">' + fmtNum(d.eg) + '</span></div>' +
-        '</div>';
-    }).join('') + '</div>';
+    const cats = [...allCats].sort((a, b) => (currByCat[b] || 0) - (currByCat[a] || 0));
+    if (!cats.length) { el.innerHTML = '<div class="empty">Sin datos para comparar.</div>'; return; }
+    const maxVal = Math.max(1, ...cats.map(c => Math.max(currByCat[c] || 0, prevByCat[c] || 0)));
+    const BAR_H = 120;
+    let html = '<div class="comp-legend"><span><i style="background:rgba(148,163,184,.35);border:1px solid rgba(148,163,184,.3)"></i> Mes anterior</span><span><i style="background:linear-gradient(180deg,var(--purple),#9333ea)"></i> Este mes</span></div>';
+    html += '<div class="comp-chart">';
+    for (const c of cats) {
+      const cv = currByCat[c] || 0, pv = prevByCat[c] || 0;
+      const ch = Math.max(2, Math.round(cv / maxVal * BAR_H));
+      const ph = Math.max(2, Math.round(pv / maxVal * BAR_H));
+      const diff = cv - pv;
+      const pct = pv > 0 ? Math.round(diff / pv * 100) : null;
+      let diffLabel = '';
+      if (pv === 0 && cv > 0) diffLabel = '● nuevo';
+      else if (cv === 0 && pv > 0) diffLabel = '● eliminado';
+      else if (diff > 0) diffLabel = '▲ +' + (pct !== null ? pct + '%' : '');
+      else if (diff < 0) diffLabel = '▼ ' + (pct !== null ? pct + '%' : '');
+      else diffLabel = '=';
+      html += '<div class="comp-col"><div class="comp-bars" style="height:' + BAR_H + 'px">';
+      html += '<div class="comp-bar prev" style="height:' + ph + 'px"><span class="tip">' + esc(c) + ' (mes ant.): ' + money(pv) + '</span></div>';
+      html += '<div class="comp-bar curr" style="height:' + ch + 'px"><span class="tip">' + esc(c) + ' (este mes): ' + money(cv) + '</span></div>';
+      html += '</div><div class="comp-lbl"><b>' + esc(c) + '</b></div>';
+      html += '<div style="font-size:.68rem;color:var(--muted)">' + diffLabel + '</div>';
+      html += '<div style="font-size:.68rem">' + money(cv) + '</div></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
   }
 
   const CAT_COLORS = ['#f472b6','#a78bfa','#38bdf8','#22c55e','#f59e0b','#ef4444','#6366f1','#14b8a6','#f97316','#ec4899','#8b5cf6','#06b6d4'];
