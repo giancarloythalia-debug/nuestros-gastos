@@ -313,6 +313,14 @@
   .pivot-table th:last-child, .pivot-table td:last-child { background: var(--surface); font-weight: 700; }
   .pivot-table tr:last-child td { background: var(--surface); font-weight: 700; border-top: 2px solid var(--border); }
   .pivot-table td.empty-cell { color: var(--border); }
+  .pago-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  .pago-table th, .pago-table td { padding: 8px 12px; border: 1px solid var(--border); text-align: right; }
+  .pago-table th { background: var(--surface); color: var(--muted); font-weight: 600; text-align: center; }
+  .pago-table th:first-child, .pago-table td:first-child { text-align: left; font-weight: 600; }
+  .pago-table tr:last-child td { background: var(--surface); font-weight: 700; border-top: 2px solid var(--border); }
+  .pago-table td.gian { color: var(--blue); }
+  .pago-table td.thali { color: var(--rose); }
+  .pago-table td.comp { color: var(--amber); }
   .cuentas-dash { display: flex; align-items: center; gap: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; flex-wrap: wrap; }
   .donut-wrap { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
   .donut { width: 112px; height: 112px; border-radius: 50%; }
@@ -580,6 +588,14 @@
           <input type="number" id="seMonto" min="0" step="0.01" placeholder="0.00" required>
         </div>
         <div>
+          <label for="sePago">¿Quién paga?</label>
+          <select id="sePago">
+            <option value="Giancarlo ML">Giancarlo</option>
+            <option value="Thali">Thali</option>
+            <option value="Compartido">Compartido (50/50)</option>
+          </select>
+        </div>
+        <div>
           <label for="seMonthSel">Mes</label>
           <select id="seMonthSel"></select>
         </div>
@@ -602,12 +618,12 @@
     </div>
     <div class="list">
       <div class="list-header">
-        <span>Descripción / Quién</span><span>Categoría</span><span>Monto</span><span></span>
+        <span>Descripción / Quién ingresa / Quién paga</span><span>Categoría</span><span>Monto</span><span></span>
       </div>
       <div id="listSharedEgresos"></div>
     </div>
     <div class="card" style="margin-bottom:16px">
-      <div class="t">📊 Nuestros gastos por mes y categoría</div>
+      <div class="t">📊 Nuestros gastos por mes y categoría <small style="font-weight:400;color:var(--muted)">· 🔵 Giancarlo paga · 🔴 Thali paga</small></div>
       <div id="sharedChart" style="overflow-x:auto"></div>
       <div id="sharedPivot" style="overflow-x:auto"></div>
     </div>
@@ -1756,10 +1772,15 @@
       const catSel = catOpts.replace('value="' + esc(e.cat) + '"', 'value="' + esc(e.cat) + '" selected');
       const isMine = e.by === currentUser;
       const byLabel = e.by ? '<span class="tag" style="background:rgba(56,189,248,.15);color:var(--blue);font-size:.7rem">' + esc(e.by) + '</span>' : '';
+      const pagoVal = e.pago || 'Compartido';
+      const pagoOpts = '<option value="Giancarlo ML"' + (pagoVal === 'Giancarlo ML' ? ' selected' : '') + '>Giancarlo</option>' +
+        '<option value="Thali"' + (pagoVal === 'Thali' ? ' selected' : '') + '>Thali</option>' +
+        '<option value="Compartido"' + (pagoVal === 'Compartido' ? ' selected' : '') + '>Compartido</option>';
       return `
       <div class="row">
         <span>${esc(e.desc)}
           ${byLabel}
+          <select data-shared-pago="${e.id}" style="width:auto;padding:4px 6px;font-size:.78rem;margin-top:4px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px">${pagoOpts}</select>
           <span style="color:var(--muted);font-size:.75rem">📅 ${monthLabel}</span>
           <select data-shared-cat="${e.id}" style="width:auto;padding:4px 6px;font-size:.78rem;margin-top:4px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px">${catSel}</select>
           ${cuentas.length ? '<select data-shared-cuenta="' + e.id + '" style="width:auto;padding:4px 6px;font-size:.8rem;margin-top:6px">' + selOpts.replace('<option value="' + esc(e.cuenta || '') + '">', '<option value="' + esc(e.cuenta || '') + '" selected>') + '</select>' : ''}
@@ -2033,6 +2054,7 @@
       desc: this.querySelector('#seDesc').value.trim(),
       cat: this.querySelector('#seCategoria').value,
       monto: Number(this.querySelector('#seMonto').value),
+      pago: this.querySelector('#sePago').value,
       cuenta: cuentaEl ? (cuentaEl.value || null) : null
     }, mk);
     this.reset();
@@ -2040,6 +2062,14 @@
   });
 
   document.getElementById('listSharedEgresos').addEventListener('change', function (e) {
+    const selPago = e.target.closest('[data-shared-pago]');
+    if (selPago) {
+      const k = seMonthFilter || keyOf(current);
+      const list = state.shared.egresos[k] || [];
+      const ex = list.find(x => x.id === Number(selPago.dataset.sharedPago));
+      if (ex) { ex.pago = selPago.value; saveState(); render(); }
+      return;
+    }
     const selCat = e.target.closest('[data-shared-cat]');
     if (selCat) {
       const k = seMonthFilter || keyOf(current);
@@ -2505,6 +2535,70 @@
     el.innerHTML = html;
   }
 
+  function buildSharedPivotTable(data, el) {
+    const monthKeys = Object.keys(data).sort();
+    const gianPct = pctFor('Giancarlo ML');
+    const thalPct = pctFor('Thali');
+    const byCatMonth = {};
+    for (const k of monthKeys) {
+      for (const e of (data[k] || [])) {
+        if (!byCatMonth[e.cat]) byCatMonth[e.cat] = {};
+        if (!byCatMonth[e.cat][k]) byCatMonth[e.cat][k] = { total: 0, gian: 0, thali: 0 };
+        const monto = Number(e.monto) || 0;
+        const pago = e.pago || 'Compartido';
+        byCatMonth[e.cat][k].total += monto;
+        if (pago === 'Giancarlo ML') {
+          byCatMonth[e.cat][k].gian += monto;
+        } else if (pago === 'Thali') {
+          byCatMonth[e.cat][k].thali += monto;
+        } else {
+          byCatMonth[e.cat][k].gian += Math.round(monto * gianPct / 100 * 100) / 100;
+          byCatMonth[e.cat][k].thali += Math.round(monto * thalPct / 100 * 100) / 100;
+        }
+      }
+    }
+    const catNames = Object.keys(byCatMonth).sort((a, b) => {
+      const sa = monthKeys.reduce((s, k) => s + ((byCatMonth[a][k] || {}).total || 0), 0);
+      const sb = monthKeys.reduce((s, k) => s + ((byCatMonth[b][k] || {}).total || 0), 0);
+      return sb - sa;
+    });
+    if (!catNames.length || !monthKeys.length) { el.innerHTML = ''; return; }
+    let html = '<table class="pivot-table"><thead><tr><th>Categoría</th>';
+    for (const k of monthKeys) {
+      const [y, m] = k.split('-');
+      html += '<th>' + MONTHS[Number(m) - 1].slice(0, 3) + ' ' + y + '</th>';
+    }
+    html += '<th>Total</th></tr></thead><tbody>';
+    const monthGTotals = {}, monthTTotals = {};
+    for (const k of monthKeys) { monthGTotals[k] = 0; monthTTotals[k] = 0; }
+    let grandG = 0, grandT = 0;
+    for (const c of catNames) {
+      html += '<tr><td style="font-weight:700">' + esc(c) + '</td>';
+      let rowG = 0, rowT = 0;
+      for (const k of monthKeys) {
+        const d = byCatMonth[c][k] || { total: 0, gian: 0, thali: 0 };
+        const g = Math.round(d.gian * 100) / 100;
+        const t = Math.round(d.thali * 100) / 100;
+        rowG += g; rowT += t;
+        monthGTotals[k] += g; monthTTotals[k] += t;
+        if (d.total > 0) {
+          html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(g) + '</span><br><span class="thali" style="color:var(--rose)">' + money(t) + '</span></td>';
+        } else {
+          html += '<td class="empty-cell">—</td>';
+        }
+      }
+      grandG += rowG; grandT += rowT;
+      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(rowG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(rowT) + '</span></td></tr>';
+    }
+    html += '<tr><td style="font-weight:700">Total</td>';
+    for (const k of monthKeys) {
+      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(monthGTotals[k]) + '</span><br><span class="thali" style="color:var(--rose)">' + money(monthTTotals[k]) + '</span></td>';
+    }
+    html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(grandG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(grandT) + '</span></td></tr></tbody></table>';
+    html += '<div style="margin-top:8px;font-size:.78rem"><span style="color:var(--blue)">● Giancarlo paga</span> <span style="color:var(--rose);margin-left:12px">● Thali paga</span></div>';
+    el.innerHTML = html;
+  }
+
   function renderEgresosChart() {
     const el = document.getElementById('egresosChart');
     if (!el) return;
@@ -2521,7 +2615,7 @@
     const data = state.shared.egresos || {};
     buildCatChart(data, el);
     const pivEl = document.getElementById('sharedPivot');
-    if (pivEl) buildPivotTable(data, pivEl);
+    if (pivEl) buildSharedPivotTable(data, pivEl);
   }
 
   function renderDeudaCloud() {

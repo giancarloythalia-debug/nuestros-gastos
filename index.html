@@ -623,11 +623,7 @@
       <div id="listSharedEgresos"></div>
     </div>
     <div class="card" style="margin-bottom:16px">
-      <div class="t">💰 ¿Quién debe pagar? <small>por categoría</small></div>
-      <div id="pagoSummary" style="overflow-x:auto"></div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="t">📊 Nuestros gastos por mes y categoría</div>
+      <div class="t">📊 Nuestros gastos por mes y categoría <small style="font-weight:400;color:var(--muted)">· 🔵 Giancarlo paga · 🔴 Thali paga</small></div>
       <div id="sharedChart" style="overflow-x:auto"></div>
       <div id="sharedPivot" style="overflow-x:auto"></div>
     </div>
@@ -1714,7 +1710,6 @@
     fillCuentaSelect();
     renderEgresos();
     renderShared();
-    renderPagoSummary();
     renderEgresosChart();
     renderSharedChart();
     renderPlan();
@@ -1795,42 +1790,6 @@
         ${isMine ? '<button class="del" data-coll="shared" data-id="' + e.id + '" title="Eliminar">✕</button>' : '<span style="color:var(--muted);font-size:.7rem">🔒</span>'}
       </div>`;
     }).join('');
-  }
-
-  function renderPagoSummary() {
-    const el = document.getElementById('pagoSummary');
-    if (!el) return;
-    const filterKey = seMonthFilter || keyOf(current);
-    const list = (state.shared.egresos[filterKey]) || [];
-    const names = profileList();
-    if (!names.length || !list.length) { el.innerHTML = '<div class="empty">Sin datos.</div>'; return; }
-    const cats = {};
-    for (const e of list) {
-      if (!cats[e.cat]) cats[e.cat] = {};
-      const pago = e.pago || 'Compartido';
-      const gianPct = pctFor('Giancarlo ML');
-      const thalPct = pctFor('Thali');
-      if (pago === 'Giancarlo ML') {
-        cats[e.cat]['Giancarlo ML'] = (cats[e.cat]['Giancarlo ML'] || 0) + (Number(e.monto) || 0);
-      } else if (pago === 'Thali') {
-        cats[e.cat]['Thali'] = (cats[e.cat]['Thali'] || 0) + (Number(e.monto) || 0);
-      } else {
-        const monto = Number(e.monto) || 0;
-        cats[e.cat]['Giancarlo ML'] = (cats[e.cat]['Giancarlo ML'] || 0) + Math.round(monto * gianPct / 100 * 100) / 100;
-        cats[e.cat]['Thali'] = (cats[e.cat]['Thali'] || 0) + Math.round(monto * thalPct / 100 * 100) / 100;
-      }
-    }
-    const catNames = Object.keys(cats).sort();
-    let html = '<table class="pago-table"><thead><tr><th>Categoría</th><th>Giancarlo paga</th><th>Thali paga</th><th>Total</th></tr></thead><tbody>';
-    let totG = 0, totT = 0;
-    for (const c of catNames) {
-      const g = Math.round((cats[c]['Giancarlo ML'] || 0) * 100) / 100;
-      const t = Math.round((cats[c]['Thali'] || 0) * 100) / 100;
-      totG += g; totT += t;
-      html += '<tr><td>' + esc(c) + '</td><td class="gian">' + money(g) + '</td><td class="thali">' + money(t) + '</td><td>' + money(g + t) + '</td></tr>';
-    }
-    html += '<tr><td>Total</td><td class="gian">' + money(totG) + '</td><td class="thali">' + money(totT) + '</td><td>' + money(totG + totT) + '</td></tr></tbody></table>';
-    el.innerHTML = html;
   }
 
   function renderSplit() {
@@ -2576,6 +2535,70 @@
     el.innerHTML = html;
   }
 
+  function buildSharedPivotTable(data, el) {
+    const monthKeys = Object.keys(data).sort();
+    const gianPct = pctFor('Giancarlo ML');
+    const thalPct = pctFor('Thali');
+    const byCatMonth = {};
+    for (const k of monthKeys) {
+      for (const e of (data[k] || [])) {
+        if (!byCatMonth[e.cat]) byCatMonth[e.cat] = {};
+        if (!byCatMonth[e.cat][k]) byCatMonth[e.cat][k] = { total: 0, gian: 0, thali: 0 };
+        const monto = Number(e.monto) || 0;
+        const pago = e.pago || 'Compartido';
+        byCatMonth[e.cat][k].total += monto;
+        if (pago === 'Giancarlo ML') {
+          byCatMonth[e.cat][k].gian += monto;
+        } else if (pago === 'Thali') {
+          byCatMonth[e.cat][k].thali += monto;
+        } else {
+          byCatMonth[e.cat][k].gian += Math.round(monto * gianPct / 100 * 100) / 100;
+          byCatMonth[e.cat][k].thali += Math.round(monto * thalPct / 100 * 100) / 100;
+        }
+      }
+    }
+    const catNames = Object.keys(byCatMonth).sort((a, b) => {
+      const sa = monthKeys.reduce((s, k) => s + ((byCatMonth[a][k] || {}).total || 0), 0);
+      const sb = monthKeys.reduce((s, k) => s + ((byCatMonth[b][k] || {}).total || 0), 0);
+      return sb - sa;
+    });
+    if (!catNames.length || !monthKeys.length) { el.innerHTML = ''; return; }
+    let html = '<table class="pivot-table"><thead><tr><th>Categoría</th>';
+    for (const k of monthKeys) {
+      const [y, m] = k.split('-');
+      html += '<th>' + MONTHS[Number(m) - 1].slice(0, 3) + ' ' + y + '</th>';
+    }
+    html += '<th>Total</th></tr></thead><tbody>';
+    const monthGTotals = {}, monthTTotals = {};
+    for (const k of monthKeys) { monthGTotals[k] = 0; monthTTotals[k] = 0; }
+    let grandG = 0, grandT = 0;
+    for (const c of catNames) {
+      html += '<tr><td style="font-weight:700">' + esc(c) + '</td>';
+      let rowG = 0, rowT = 0;
+      for (const k of monthKeys) {
+        const d = byCatMonth[c][k] || { total: 0, gian: 0, thali: 0 };
+        const g = Math.round(d.gian * 100) / 100;
+        const t = Math.round(d.thali * 100) / 100;
+        rowG += g; rowT += t;
+        monthGTotals[k] += g; monthTTotals[k] += t;
+        if (d.total > 0) {
+          html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(g) + '</span><br><span class="thali" style="color:var(--rose)">' + money(t) + '</span></td>';
+        } else {
+          html += '<td class="empty-cell">—</td>';
+        }
+      }
+      grandG += rowG; grandT += rowT;
+      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(rowG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(rowT) + '</span></td></tr>';
+    }
+    html += '<tr><td style="font-weight:700">Total</td>';
+    for (const k of monthKeys) {
+      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(monthGTotals[k]) + '</span><br><span class="thali" style="color:var(--rose)">' + money(monthTTotals[k]) + '</span></td>';
+    }
+    html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(grandG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(grandT) + '</span></td></tr></tbody></table>';
+    html += '<div style="margin-top:8px;font-size:.78rem"><span style="color:var(--blue)">● Giancarlo paga</span> <span style="color:var(--rose);margin-left:12px">● Thali paga</span></div>';
+    el.innerHTML = html;
+  }
+
   function renderEgresosChart() {
     const el = document.getElementById('egresosChart');
     if (!el) return;
@@ -2592,7 +2615,7 @@
     const data = state.shared.egresos || {};
     buildCatChart(data, el);
     const pivEl = document.getElementById('sharedPivot');
-    if (pivEl) buildPivotTable(data, pivEl);
+    if (pivEl) buildSharedPivotTable(data, pivEl);
   }
 
   function renderDeudaCloud() {
