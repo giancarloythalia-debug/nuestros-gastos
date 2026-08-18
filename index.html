@@ -1338,7 +1338,22 @@
             d = ensureDefaults(d); d = applyPlanDefs(d); reconcileSharedCuentas(d);
             state = d;
             saveState();
-            renderLogin();
+  var savedSession = localStorage.getItem('gastosPareja_session');
+  if (savedSession && state.profiles[savedSession]) {
+    currentUser = savedSession;
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    document.getElementById('userName').textContent = savedSession;
+    document.getElementById('profileName').textContent = savedSession;
+    current = getCurrentMonth();
+    planMonth = current.m + 1;
+    planYear = Math.max(PLAN_START_Y, currentYear());
+    fillSelects();
+    fillMonthFormSelects();
+    render();
+  } else {
+    renderLogin();
+  }
             if (currentUser) render();
           }
         })
@@ -1634,6 +1649,7 @@
     const p = state.profiles[name];
     if (!p || p.passwordHash !== hashStr(pass)) return false;
     currentUser = name;
+    localStorage.setItem('gastosPareja_session', name);
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     document.getElementById('userName').textContent = name;
@@ -1649,6 +1665,7 @@
 
   function logout() {
     currentUser = null;
+    localStorage.removeItem('gastosPareja_session');
     document.getElementById('app').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
     document.getElementById('formCreate').classList.add('hidden');
