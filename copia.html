@@ -293,46 +293,6 @@
   .cd-red { background: var(--red); }
   .ct-dist small { color: var(--muted); font-size: .72rem; }
   @keyframes barShine { 0% { transform: translateX(-100%); } 45%, 100% { transform: translateX(100%); } }
-  .cat-chart-wrap { display: flex; align-items: flex-end; gap: 6px; padding: 14px 4px 0; min-height: 160px; }
-  .cat-chart-col { flex: 1; min-width: 28px; max-width: 60px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .cat-chart-stack { display: flex; flex-direction: column; width: 100%; border-radius: 6px 6px 3px 3px; overflow: hidden; }
-  .cat-chart-seg { min-height: 2px; position: relative; transition: height .4s ease; }
-  .cat-chart-seg:hover { filter: brightness(1.2); }
-  .cat-chart-seg .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; font-size: .66rem; font-weight: 700; padding: 3px 7px; border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s; z-index: 6; }
-  .cat-chart-seg:hover .tip { opacity: 1; }
-  .cat-chart-lbl { font-size: .72rem; color: var(--muted); text-align: center; margin-top: 4px; }
-  .cat-chart-lbl b { display: block; color: var(--text); font-size: .78rem; font-weight: 800; }
-  .cat-chart-total { font-size: .68rem; color: var(--muted); text-align: center; margin-top: 2px; }
-  .cat-legend { display: flex; flex-wrap: wrap; gap: 10px; padding: 8px 4px; font-size: .78rem; color: var(--muted); }
-  .cat-legend .cl { display: inline-flex; align-items: center; gap: 5px; }
-  .cat-legend .cl-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .pivot-table { width: 100%; border-collapse: collapse; font-size: .78rem; margin-top: 8px; }
-  .pivot-table th, .pivot-table td { padding: 6px 10px; border: 1px solid var(--border); text-align: right; white-space: nowrap; }
-  .pivot-table th { background: var(--surface); color: var(--muted); font-weight: 600; text-align: center; }
-  .pivot-table th:first-child, .pivot-table td:first-child { text-align: left; font-weight: 600; }
-  .pivot-table th:last-child, .pivot-table td:last-child { background: var(--surface); font-weight: 700; }
-  .pivot-table tr:last-child td { background: var(--surface); font-weight: 700; border-top: 2px solid var(--border); }
-  .pivot-table td.empty-cell { color: var(--border); }
-  .pago-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-  .pago-table th, .pago-table td { padding: 8px 12px; border: 1px solid var(--border); text-align: right; }
-  .pago-table th { background: var(--surface); color: var(--muted); font-weight: 600; text-align: center; }
-  .pago-table th:first-child, .pago-table td:first-child { text-align: left; font-weight: 600; }
-  .pago-table tr:last-child td { background: var(--surface); font-weight: 700; border-top: 2px solid var(--border); }
-  .pago-table td.gian { color: var(--blue); }
-  .pago-table td.thali { color: var(--rose); }
-  .pago-table td.comp { color: var(--amber); }
-  .comp-chart { display: flex; align-items: flex-end; gap: 6px; padding: 14px 2px 0; min-height: 160px; }
-  .comp-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .comp-bars { display: flex; align-items: flex-end; gap: 2px; width: 100%; }
-  .comp-bar { flex: 1; border-radius: 3px 3px 0 0; position: relative; min-height: 2px; }
-  .comp-bar .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; font-size: .66rem; font-weight: 700; padding: 3px 7px; border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s; z-index: 6; }
-  .comp-bar:hover .tip { opacity: 1; }
-  .comp-val { font-size: .65rem; font-weight: 700; white-space: nowrap; text-align: center; }
-  .comp-lbl { font-size: .65rem; color: var(--muted); text-align: center; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
-  .comp-lbl b { display: block; color: var(--text); font-size: .72rem; font-weight: 800; }
-  .comp-legend { display: flex; gap: 16px; padding: 8px 4px; font-size: .78rem; color: var(--muted); }
-  .comp-legend span { display: inline-flex; align-items: center; gap: 5px; }
-  .comp-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
   .cuentas-dash { display: flex; align-items: center; gap: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; flex-wrap: wrap; }
   .donut-wrap { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
   .donut { width: 112px; height: 112px; border-radius: 50%; }
@@ -507,15 +467,22 @@
 
   <div class="cards">
     <div class="card"><div class="t">💸 Mis gastos individuales</div><div class="v red" id="cEgresos">S/ 0.00</div></div>
-    <div class="card"><div class="t">💸 Gasto vs mes anterior</div><div class="v blue" id="cBalance">S/ 0.00</div><small id="cBalanceDelta" style="color:var(--muted);font-size:.75rem"></small></div>
+    <div class="card"><div class="t">💖 Mi balance del mes</div><div class="v blue" id="cBalance">S/ 0.00</div></div>
     <div class="card"><div class="t">🤝 Nuestros gastos del mes</div><div class="v purple" id="cCompartido">S/ 0.00</div></div>
     <div class="card"><div class="t">🗓️ Pagos plan del mes</div><div class="v purple" id="cPlanMes">S/ 0.00</div></div>
     <div class="card"><div class="t">🐷 Ahorro acumulado <small id="cAhorroSrc" style="color:var(--muted);font-weight:400"></small></div><div class="v amber" id="cAhorro">S/ 0.00</div></div>
   </div>
 
   <div class="card" style="margin-bottom:16px">
-    <div class="t">📊 Gastos por categoría: este mes vs anterior</div>
-    <div id="monthCompChart"></div>
+    <div class="t">📊 Flujo mensual de las cuentas <small id="cuentasChartYear" style="color:var(--muted);font-weight:400"></small></div>
+    <div class="chart-legend">
+      <span><i class="lg in"></i> Ingresos a cuentas (pagos del plan)</span>
+      <span><i class="lg out"></i> Egresos de cuentas (retiros)</span>
+    </div>
+    <div class="chart-flex">
+      <div id="cuentasChart"></div>
+      <div class="cuentas-dash in-card" id="cuentasDash"></div>
+    </div>
   </div>
 
   <div class="tabs">
@@ -541,10 +508,6 @@
           <label for="egMonto">Monto (S/)</label>
           <input type="number" id="egMonto" min="0" step="0.01" placeholder="0.00" required>
         </div>
-        <div>
-          <label for="egMonthSel">Mes</label>
-          <select id="egMonthSel"></select>
-        </div>
         <button type="submit" class="btn">Agregar 💗</button>
       </div>
       <div class="check-row">
@@ -556,20 +519,11 @@
       <span>Total mis egresos: <b id="sumEgresos">S/ 0.00</b></span>
       <span>Registros: <b id="countEgresos">0</b></span>
     </div>
-    <div class="toolbar" style="justify-content:flex-start;align-items:center">
-      <span style="color:var(--muted)">📅 Ver mes:</span>
-      <select id="egMonthFilter" style="max-width:180px"><option value="">Mes actual</option></select>
-    </div>
     <div class="list">
       <div class="list-header">
         <span>Descripción</span><span>Categoría</span><span>Monto</span><span></span>
       </div>
       <div id="listEgresos"></div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="t">📊 Mis gastos por mes y categoría</div>
-      <div id="egresosChart" style="overflow-x:auto"></div>
-      <div id="egresosPivot" style="overflow-x:auto"></div>
     </div>
   </div>
 
@@ -592,18 +546,6 @@
           <label for="seMonto">Monto (S/)</label>
           <input type="number" id="seMonto" min="0" step="0.01" placeholder="0.00" required>
         </div>
-        <div>
-          <label for="sePago">¿Quién paga?</label>
-          <select id="sePago">
-            <option value="Giancarlo ML">Giancarlo</option>
-            <option value="Thali">Thali</option>
-            <option value="Compartido">Compartido (50/50)</option>
-          </select>
-        </div>
-        <div>
-          <label for="seMonthSel">Mes</label>
-          <select id="seMonthSel"></select>
-        </div>
         <button type="submit" class="btn">Agregar 💗</button>
       </div>
       <div class="form-row" style="grid-template-columns:1fr">
@@ -617,20 +559,11 @@
       <span>Total compartido: <b id="sumSharedEgresos">S/ 0.00</b></span>
       <span>Registros: <b id="countSharedEgresos">0</b></span>
     </div>
-    <div class="toolbar" style="justify-content:flex-start;align-items:center">
-      <span style="color:var(--muted)">📅 Ver mes:</span>
-      <select id="seMonthFilter" style="max-width:180px"><option value="">Mes actual</option></select>
-    </div>
     <div class="list">
       <div class="list-header">
-        <span>Descripción / Quién ingresa / Quién paga</span><span>Categoría</span><span>Monto</span><span></span>
+        <span>Descripción</span><span>Categoría</span><span>Monto</span><span></span>
       </div>
       <div id="listSharedEgresos"></div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="t">📊 Nuestros gastos por mes y categoría <small style="font-weight:400;color:var(--muted)">· 🔵 Giancarlo paga · 🔴 Thali paga</small></div>
-      <div id="sharedChart" style="overflow-x:auto"></div>
-      <div id="sharedPivot" style="overflow-x:auto"></div>
     </div>
   </div>
 
@@ -667,7 +600,6 @@
       <span>Total en cuentas: <b id="cuentasTotal">S/ 0.00</b></span>
       <span>💡 Marcá un pago en <b>Plan de pagos</b> para enviarlo a una cuenta</span>
     </div>
-    <div class="cuentas-dash in-card" id="cuentasDash" style="margin-bottom:16px"></div>
     <div id="cuentasList"></div>
   </div>
 
@@ -803,12 +735,6 @@
       </div>
       <span id="remoteStatus" style="display:block;font-size:.85rem;margin-top:8px"></span>
     </div>
-    <div class="card" style="margin-bottom:20px">
-      <h3 class="sec-title">💾 Respaldo de datos</h3>
-      <p style="color:var(--muted);font-size:.85rem;margin-bottom:10px">Descargá todos tus datos como archivo JSON. Si algo se borra, este archivo lo restaura.</p>
-      <button class="btn" id="btnExportData">📥 Descargar respaldo (backup.json)</button>
-      <span id="exportMsg" style="display:block;font-size:.85rem;margin-top:8px"></span>
-    </div>
   </div>
 
   <div class="footer">Hecho con 💞 para nuestro hogar · Los datos se guardan solos en el navegador</div>
@@ -833,7 +759,7 @@
   });
   const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const STORE_KEY = 'gastosPareja_v2';
-  const EMBEDDED_DATA = {"updatedAt":1787029548136,"profiles":{"Giancarlo ML":{"passwordHash":"f0547f7c79f45b70","ingresos":{},"egresos":{"2026-08":[{"desc":"pago almuerzo Angela","cat":"Comida","monto":15.3,"id":1786927721670},{"desc":"Gaseosa de cafe","cat":"Gustitos","monto":3.5,"id":1786939453468},{"desc":"Monedero de sapo","cat":"Gustitos","monto":12,"id":1786939478165},{"desc":"churrito","cat":"Gustitos","monto":3.5,"id":1786939578404},{"desc":"salchipapa kingbroaster","cat":"Gustitos","monto":10,"id":1786939640447},{"desc":"taxi a casa de rafax","cat":"Pasajes","monto":8.7,"id":1786940173573},{"desc":"tortita para thalia","cat":"Gustitos","monto":4,"id":1786940191165},{"desc":"gaseosa y gomita - casa de rafax","cat":"Gustitos","monto":8.7,"id":1786940245991},{"desc":"taxi retorno de casa de rafax","cat":"Pasajes","monto":8.5,"id":1786940301048},{"desc":"salchipapa casa de rafa","cat":"Gustitos","monto":23,"id":1786940362058},{"desc":"almuerzo lunes chinawok","cat":"Comida","monto":16.96,"id":1786940400387},{"desc":"Protector para el estomago","cat":"Salud","monto":10,"id":1786940608942},{"desc":"sanguchitos gian y marce","cat":"Comida","monto":15,"id":1786940631408},{"desc":"desayuno","cat":"Comida","monto":3,"id":1786940778435},{"desc":"almuerzo chinawok","cat":"Comida","monto":14.4,"id":1786940796037},{"desc":"API para Thalia","cat":"Gustitos","monto":4,"id":1786940857738},{"desc":"Antigripales","cat":"Salud","monto":3,"id":1786940868237},{"desc":"Almuercito Thalia","cat":"Comida","monto":15,"id":1786940967960},{"desc":"Antigripales","cat":"Salud","monto":3.6,"id":1786941062573},{"desc":"Heladito con thalia","cat":"Gustitos","monto":5.5,"id":1786941077643},{"desc":"Pasajes a la FIA","cat":"Pasajes","monto":3,"id":1786941185111},{"desc":"sanguchitos CORSO","cat":"Gustitos","monto":12,"id":1786941347899},{"desc":"buñuelos","cat":"Gustitos","monto":5,"id":1786941359124},{"desc":"Ponche, papitas, cafe","cat":"Gustitos","monto":6.5,"id":1786941396152}]}},"Thali":{"passwordHash":"39ec63f5d6446a0a","ingresos":{},"egresos":{"2026-08":[{"desc":"Combi","cat":"Pasajes","monto":1.3,"id":1785879861249},{"desc":"Desayuno","cat":"Comida","monto":3.8,"id":1786942327559},{"desc":"Almuerzo","cat":"Comida","monto":14.5,"id":1786942343559},{"desc":"Taxi IREN","cat":"Pasajes","monto":5.1,"id":1786942362881},{"desc":"gustito","cat":"Gustitos","monto":1.2,"id":1786942382713},{"desc":"Crema para rostro","cat":"Limpieza","monto":27,"id":1786942421027},{"desc":"Almuerzo Lunes","cat":"Comida","monto":19,"id":1786942453797},{"desc":"Taxi ida al seguro","cat":"Pasajes","monto":10,"id":1786942498348},{"desc":"Taxi vuelta al seguro","cat":"Pasajes","monto":7.8,"id":1786942508863},{"desc":"Aretes","cat":"Gustitos","monto":35,"id":1786942760817},{"desc":"gustitos","cat":"Gustitos","monto":6,"id":1786942818842},{"desc":"alcohol FIA","cat":"Gustitos","monto":60,"id":1786942941020},{"desc":"almuerzo final basquet","cat":"Comida","monto":30,"id":1786943119514},{"desc":"otros","cat":"Comida","monto":9.5,"id":1786943124806},{"desc":"agua","cat":"Gustitos","monto":2,"id":1786943365647},{"desc":"taxi","cat":"Pasajes","monto":9,"id":1786943371336},{"desc":"almuerzo","cat":"Comida","monto":11,"id":1786943421426},{"desc":"Desayuno","cat":"Comida","monto":5,"id":1786943469213},{"desc":"KFC","cat":"Comida","monto":24.6,"id":1786943514124}]}}},"shared":{"pagos":[],"egresos":{"2026-08":[{"desc":"Taxi a la FIA","cat":"Transporte","monto":13.9,"id":1786934620880},{"desc":"Mocaccino","cat":"Gustitos","monto":30,"id":1786939536802,"by":"Giancarlo ML"},{"desc":"Recarga de trago FIA","cat":"Gustitos","monto":15,"id":1786939665152,"by":"Giancarlo ML"},{"desc":"Detergente","cat":"Limpieza","monto":4.8,"id":1786940118733,"by":"Giancarlo ML"},{"desc":"1ra cita oftalmologo","cat":"Salud","monto":60,"id":1786940456877,"by":"Giancarlo ML"},{"desc":"1ra Cita neurologo","cat":"Salud","monto":51,"id":1786940478627,"by":"Giancarlo ML"},{"desc":"OCT cornea oftalomogo","cat":"Salud","monto":200,"id":1786940498794,"by":"Giancarlo ML"},{"desc":"Gotaviotic","cat":"Salud","monto":56,"id":1786940586161,"by":"Giancarlo ML"},{"desc":"almuercito de Thalia","cat":"Comida","monto":14,"id":1786940648176,"by":"Giancarlo ML"},{"desc":"medicamentos totales (prebictal)","cat":"Salud","monto":223.5,"id":1786940708359,"by":"Giancarlo ML"},{"desc":"2da cita Oftalmogo","cat":"Salud","monto":60,"id":1786940956013,"by":"Giancarlo ML"},{"desc":"Aciclovir x 10 unidades","cat":"Salud","monto":15,"id":1786941024045,"by":"Giancarlo ML"},{"desc":"Entradas FIA","cat":"Gustitos","monto":20,"id":1786941197904,"by":"Giancarlo ML"},{"desc":"Salchipapa King broaster","cat":"Gustitos","monto":18,"id":1786941217416,"by":"Giancarlo ML"},{"desc":"Pasajes a polleria (taxi) fia","cat":"Pasajes","monto":13.4,"id":1786941248150,"by":"Giancarlo ML"},{"desc":"Retorno a casa de Polleria","cat":"Pasajes","monto":12.6,"id":1786941265808,"by":"Giancarlo ML"},{"desc":"Taxi a mall (recupero de CHIP)","cat":"Pasajes","monto":10,"id":1786941300842,"by":"Giancarlo ML"},{"desc":"CHIP Thalia","cat":"Otro","monto":5,"id":1786941310299,"by":"Giancarlo ML"},{"desc":"Taxi a corso","cat":"Pasajes","monto":7.8,"id":1786941326375,"by":"Giancarlo ML"},{"desc":"Alcohol PIERO FIA","cat":"Gustitos","monto":104,"id":1786941414468,"by":"Giancarlo ML"},{"desc":"Polleria FIA","cat":"Gustitos","monto":31.2,"id":1786941507825,"by":"Giancarlo ML"},{"desc":"Almuercito Domingo","cat":"Comida","monto":23.76,"id":1786941526183,"by":"Giancarlo ML"},{"desc":"Perfume THALIA","cat":"Gustitos","monto":45,"id":1786941619073,"by":"Giancarlo ML"},{"desc":"AIRBNB estadia en LIMA","cat":"Viaje","monto":324,"id":1786941697894,"by":"Giancarlo ML"},{"desc":"otros - no identificado","cat":"Otro","monto":25,"id":1786942302034,"by":"Thali"},{"desc":"Arquitecto - LA PUNTA","cat":"Otro","monto":200,"id":1786942698431,"by":"Thali"},{"desc":"medicamentos","cat":"Salud","monto":122.4,"id":1786942715165,"by":"Thali"},{"desc":"medicamentos","cat":"Salud","monto":67.9,"id":1786943296226,"by":"Thali"},{"desc":"medicamentos","cat":"Comida","monto":7.9,"id":1786943307173,"by":"Thali"}]},"catIngresos":["Sueldo","Extra","Otro","Quincena"],"catEgresos":["Comida","Transporte","Otro","Pasajes","Gustitos","Salidas","Cumplea├▒os","Limpieza","Salud","Viaje"],"catPagos":["Alquiler","Luz","Agua","Internet","Gas","Cr├®dito","Otro"],"plan":[{"id":"plan-ahorro","name":"Ahorro","months":{"0":{"monto":437.1,"gian":177.05,"thalia":260,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":437.1,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":437.1,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-alimentos","name":"Alimentos","months":{"0":{"monto":400,"gian":162.04,"thalia":237.96,"pagado":true,"cuenta":null,"parcial":true,"pagos":[{"u":"Giancarlo ML","monto":400}],"cash":true},"1":{"monto":400,"pagado":false,"cuenta":null,"parcial":true,"pagos":[{"u":"Giancarlo ML","monto":124.38},{"u":"Thali","monto":224}],"cash":true},"2":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"3":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"4":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"5":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"6":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"7":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"8":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"9":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"10":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"11":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"12":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"13":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"14":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"15":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"16":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"17":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"18":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true}},"cash":true},{"id":"plan-alquiler","name":"Alquiler","months":{"0":{"monto":850,"gian":344.34,"thalia":505.66,"pagado":true,"cuenta":"cuenta-1785804793477","parcial":false,"pagos":null,"cash":false},"1":{"monto":850,"pagado":true,"cuenta":"cuenta-1785804793477","parcial":false,"pagos":null,"cash":false},"2":{"monto":850,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804793477"},"3":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-aseo","name":"Aseo","months":{"1":{"monto":192,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"4":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-departamento","name":"Departamento","months":{"0":{"monto":1525.9,"gian":618.13,"thalia":907.72,"pagado":true,"cuenta":"cuenta-1785804824240","parcial":false,"pagos":null,"cash":false},"1":{"monto":1525.9,"pagado":true,"cuenta":"cuenta-1785804824240","parcial":false,"pagos":null,"cash":false},"2":{"monto":1525.9,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804824240"},"3":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-gas","name":"Gas","months":{"0":{"monto":54,"gian":21.88,"thalia":32.12,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":54,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"4":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-limpieza","name":"Limpieza","months":{"1":{"monto":73,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"4":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-salud","name":"Salud","months":{"0":{"monto":100,"gian":40.51,"thalia":59.49,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":100,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":100,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-servicios","name":"Servicios","months":{"0":{"monto":150,"gian":60.77,"thalia":89.23,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":150,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":150,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false}],"pct":{"Giancarlo ML":41,"Thali":59},"planDefs":[{"id":"plan-ahorro","name":"Ahorro","amount":437.1,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-alimentos","name":"Alimentos","amount":400,"freq":"mensual","start":1,"parcial":true,"cash":true},{"id":"plan-alquiler","name":"Alquiler","amount":850,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-aseo","name":"Aseo","amount":192,"freq":"trimestral","start":2,"parcial":false,"cash":false},{"id":"plan-departamento","name":"Departamento","amount":1525.9,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-gas","name":"Gas","amount":54,"freq":"bimensual","start":1,"parcial":false,"cash":false},{"id":"plan-limpieza","name":"Limpieza","amount":73,"freq":"trimestral","start":2,"parcial":false,"cash":false},{"id":"plan-salud","name":"Salud","amount":100,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-servicios","name":"Servicios","amount":150,"freq":"mensual","start":1,"parcial":false,"cash":false}],"cuentas":[{"id":"cuenta-1785804777203","name":"Cuenta ESPOSITOS - Thalia","inicial":295.75,"egresos":[{"id":1785820799248,"desc":"Aseo Junio","monto":170.1,"cat":"Aseo","mes":0},{"id":1785869954325,"desc":"Gas","monto":54,"cat":"Gas","mes":0},{"id":1785870004493,"desc":"Limpieza","monto":68,"cat":"Limpieza","mes":0},{"id":1785870066064,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":0},{"id":1785870232245,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":1},{"id":1785870267812,"desc":"Salud - Herpes GIAN","monto":200,"cat":"Salud","mes":1},{"id":1785870350128,"desc":"Aseo (Jabon intemo, queratina, toallitas nocturnas)","monto":21.9,"cat":"Aseo","mes":2},{"id":1785890143376,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":2}]},{"id":"cuenta-1785804793477","name":"Cuenta se├▒ora Yuli","inicial":0,"egresos":[{"id":1785820709394,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":0},{"id":1785870167565,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":1},{"id":1785890192516,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":2}]},{"id":"cuenta-1785804824240","name":"Cuenta PAGO Depa - Gian","inicial":4498.85,"egresos":[{"id":1785820882920,"desc":"Pago DEPA","monto":1525.85,"cat":"Departamento","mes":0},{"id":1785870195482,"desc":"Pago DEPA","monto":1525.95,"cat":"Departamento","mes":1},{"id":1785890223684,"desc":"Pago DEPA","monto":1525.9,"cat":"Departamento","mes":2}]},{"id":"cuenta-1785804846483","name":"Cuenta AHORROS Depa - Gian","inicial":10252.63,"egresos":[]},{"id":"cuenta-1785804870005","name":"Cuenta Alimentos","inicial":0,"egresos":[{"id":1785807703513,"desc":"Dinero extraviado","monto":50,"cat":"Alimentos","mes":0},{"id":1785807816400,"desc":"Pollo","monto":58.8,"cat":"Alimentos","mes":0},{"id":1785807962069,"desc":"Compras del avelino","monto":64.1,"cat":"Alimentos","mes":0},{"id":1785807989888,"desc":"Abarrotes y compras del avelino","monto":218.6,"cat":"Alimentos","mes":0},{"id":1785808027064,"desc":"Pan","monto":8.5,"cat":"Alimentos","mes":0},{"id":1785870664613,"desc":"Alimentos mercado","monto":64.8,"cat":"Alimentos","mes":1},{"id":1785870681617,"desc":"Alimentos Tottus","monto":51.78,"cat":"Alimentos","mes":1},{"id":1785870698445,"desc":"Pan - Limon","monto":7.8,"cat":"Alimentos","mes":1},{"id":1785870716091,"desc":"Mercado avelino","monto":97.8,"cat":"Alimentos","mes":1}]}],"planVersion":3}};/*EMBED*/
+  const EMBEDDED_DATA = {"updatedAt":1786927721670,"profiles":{"Giancarlo ML":{"passwordHash":"f0547f7c79f45b70","ingresos":{},"egresos":{"2026-08":[{"desc":"pago almuerzo Angela","cat":"Comida","monto":15.3,"id":1786927721670}]}},"Thali":{"passwordHash":"39ec63f5d6446a0a","ingresos":{},"egresos":{"2026-08":[{"desc":"Combi","cat":"Pasajes","monto":1.3,"id":1785879861249}]}}},"shared":{"pagos":[],"egresos":{"2026-08":[]},"catIngresos":["Sueldo","Extra","Otro","Quincena"],"catEgresos":["Comida","Transporte","Otro","Pasajes","Gustitos","Salidas","Cumplea├▒os"],"catPagos":["Alquiler","Luz","Agua","Internet","Gas","Cr├®dito","Otro"],"plan":[{"id":"plan-ahorro","name":"Ahorro","months":{"0":{"monto":437.1,"gian":177.05,"thalia":260,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":437.1,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":437.1,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":437.1,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-alimentos","name":"Alimentos","months":{"0":{"monto":400,"gian":162.04,"thalia":237.96,"pagado":true,"cuenta":null,"parcial":true,"pagos":[{"u":"Giancarlo ML","monto":400}],"cash":true},"1":{"monto":400,"pagado":false,"cuenta":null,"parcial":true,"pagos":[{"u":"Giancarlo ML","monto":124.38},{"u":"Thali","monto":224}],"cash":true},"2":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"3":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"4":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"5":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"6":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"7":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"8":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"9":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"10":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"11":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"12":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"13":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"14":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"15":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"16":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"17":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true},"18":{"monto":400,"pagado":false,"parcial":true,"pagos":[],"cuenta":null,"cash":true}},"cash":true},{"id":"plan-alquiler","name":"Alquiler","months":{"0":{"monto":850,"gian":344.34,"thalia":505.66,"pagado":true,"cuenta":"cuenta-1785804793477","parcial":false,"pagos":null,"cash":false},"1":{"monto":850,"pagado":true,"cuenta":"cuenta-1785804793477","parcial":false,"pagos":null,"cash":false},"2":{"monto":850,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804793477"},"3":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":850,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-aseo","name":"Aseo","months":{"1":{"monto":192,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"4":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":192,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-departamento","name":"Departamento","months":{"0":{"monto":1525.9,"gian":618.13,"thalia":907.72,"pagado":true,"cuenta":"cuenta-1785804824240","parcial":false,"pagos":null,"cash":false},"1":{"monto":1525.9,"pagado":true,"cuenta":"cuenta-1785804824240","parcial":false,"pagos":null,"cash":false},"2":{"monto":1525.9,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804824240"},"3":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":1525.9,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-gas","name":"Gas","months":{"0":{"monto":54,"gian":21.88,"thalia":32.12,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":54,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"4":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":54,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-limpieza","name":"Limpieza","months":{"1":{"monto":73,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"4":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":73,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-salud","name":"Salud","months":{"0":{"monto":100,"gian":40.51,"thalia":59.49,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":100,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":100,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":100,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false},{"id":"plan-servicios","name":"Servicios","months":{"0":{"monto":150,"gian":60.77,"thalia":89.23,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"1":{"monto":150,"pagado":true,"cuenta":"cuenta-1785804777203","parcial":false,"pagos":null,"cash":false},"2":{"monto":150,"pagado":true,"parcial":false,"pagos":null,"cash":false,"cuenta":"cuenta-1785804777203"},"3":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"4":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"5":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"6":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"7":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"8":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"9":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"10":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"11":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"12":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"13":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"14":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"15":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"16":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"17":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false},"18":{"monto":150,"pagado":false,"parcial":false,"pagos":null,"cash":false}},"cash":false}],"pct":{"Giancarlo ML":41,"Thali":59},"planDefs":[{"id":"plan-ahorro","name":"Ahorro","amount":437.1,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-alimentos","name":"Alimentos","amount":400,"freq":"mensual","start":1,"parcial":true,"cash":true},{"id":"plan-alquiler","name":"Alquiler","amount":850,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-aseo","name":"Aseo","amount":192,"freq":"trimestral","start":2,"parcial":false,"cash":false},{"id":"plan-departamento","name":"Departamento","amount":1525.9,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-gas","name":"Gas","amount":54,"freq":"bimensual","start":1,"parcial":false,"cash":false},{"id":"plan-limpieza","name":"Limpieza","amount":73,"freq":"trimestral","start":2,"parcial":false,"cash":false},{"id":"plan-salud","name":"Salud","amount":100,"freq":"mensual","start":1,"parcial":false,"cash":false},{"id":"plan-servicios","name":"Servicios","amount":150,"freq":"mensual","start":1,"parcial":false,"cash":false}],"cuentas":[{"id":"cuenta-1785804777203","name":"Cuenta ESPOSITOS - Thalia","inicial":295.75,"egresos":[{"id":1785820799248,"desc":"Aseo Junio","monto":170.1,"cat":"Aseo","mes":0},{"id":1785869954325,"desc":"Gas","monto":54,"cat":"Gas","mes":0},{"id":1785870004493,"desc":"Limpieza","monto":68,"cat":"Limpieza","mes":0},{"id":1785870066064,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":0},{"id":1785870232245,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":1},{"id":1785870267812,"desc":"Salud - Herpes GIAN","monto":200,"cat":"Salud","mes":1},{"id":1785870350128,"desc":"Aseo (Jabon intemo, queratina, toallitas nocturnas)","monto":21.9,"cat":"Aseo","mes":2},{"id":1785890143376,"desc":"Servicios (Luz, agua, internet)","monto":100,"cat":"Servicios","mes":2}]},{"id":"cuenta-1785804793477","name":"Cuenta se├▒ora Yuli","inicial":0,"egresos":[{"id":1785820709394,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":0},{"id":1785870167565,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":1},{"id":1785890192516,"desc":"Alquiler","monto":850,"cat":"Alquiler","mes":2}]},{"id":"cuenta-1785804824240","name":"Cuenta PAGO Depa - Gian","inicial":4498.85,"egresos":[{"id":1785820882920,"desc":"Pago DEPA","monto":1525.85,"cat":"Departamento","mes":0},{"id":1785870195482,"desc":"Pago DEPA","monto":1525.95,"cat":"Departamento","mes":1},{"id":1785890223684,"desc":"Pago DEPA","monto":1525.9,"cat":"Departamento","mes":2}]},{"id":"cuenta-1785804846483","name":"Cuenta AHORROS Depa - Gian","inicial":10252.63,"egresos":[]},{"id":"cuenta-1785804870005","name":"Cuenta Alimentos","inicial":0,"egresos":[{"id":1785807703513,"desc":"Dinero extraviado","monto":50,"cat":"Alimentos","mes":0},{"id":1785807816400,"desc":"Pollo","monto":58.8,"cat":"Alimentos","mes":0},{"id":1785807962069,"desc":"Compras del avelino","monto":64.1,"cat":"Alimentos","mes":0},{"id":1785807989888,"desc":"Abarrotes y compras del avelino","monto":218.6,"cat":"Alimentos","mes":0},{"id":1785808027064,"desc":"Pan","monto":8.5,"cat":"Alimentos","mes":0},{"id":1785870664613,"desc":"Alimentos mercado","monto":64.8,"cat":"Alimentos","mes":1},{"id":1785870681617,"desc":"Alimentos Tottus","monto":51.78,"cat":"Alimentos","mes":1},{"id":1785870698445,"desc":"Pan - Limon","monto":7.8,"cat":"Alimentos","mes":1},{"id":1785870716091,"desc":"Mercado avelino","monto":97.8,"cat":"Alimentos","mes":1}]}],"planVersion":3}};/*EMBED*/
 
   const DEF_CAT_ING = ['Sueldo','Freelance','Extra','Otro'];
   const DEF_CAT_EG = ['Supermercado','Comida','Transporte','Servicios','Ocio','Otro'];
@@ -1063,8 +989,6 @@
   let state = loadState();
   let currentUser = null;
   let current = getCurrentMonth();
-  let egMonthFilter = '';
-  let seMonthFilter = '';
   let planMonth = current.m + 1;
   let planYear = Math.max(PLAN_START_Y, currentYear());
   let lastPlanYear = Math.max(PLAN_START_Y, currentYear() + 1);
@@ -1339,22 +1263,7 @@
             d = ensureDefaults(d); d = applyPlanDefs(d); reconcileSharedCuentas(d);
             state = d;
             saveState();
-  var savedSession = localStorage.getItem('gastosPareja_session');
-  if (savedSession && state.profiles[savedSession]) {
-    currentUser = savedSession;
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    document.getElementById('userName').textContent = savedSession;
-    document.getElementById('profileName').textContent = savedSession;
-    current = getCurrentMonth();
-    planMonth = current.m + 1;
-    planYear = Math.max(PLAN_START_Y, currentYear());
-    fillSelects();
-    fillMonthFormSelects();
-    render();
-  } else {
-    renderLogin();
-  }
+            renderLogin();
             if (currentUser) render();
           }
         })
@@ -1369,16 +1278,6 @@
 
   function keyOf(c) { return c.y + '-' + String(c.m + 1).padStart(2, '0'); }
 
-  function getMonthsWithData(obj) {
-    if (!obj) return [];
-    return Object.keys(obj).filter(k => obj[k] && obj[k].length).sort().reverse();
-  }
-
-  function filterList(data, filterKey) {
-    if (!filterKey) return data;
-    return data || [];
-  }
-
   const money = n => 'S/ ' + Number(n).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   function esc(s) {
@@ -1392,8 +1291,8 @@
 
   // ----- Mis datos (por perfil) -----
   function getMy(coll) { return state.profiles[currentUser][coll][keyOf(current)] || []; }
-  function addMy(coll, entry, overrideKey) {
-    const k = overrideKey || keyOf(current);
+  function addMy(coll, entry) {
+    const k = keyOf(current);
     if (!state.profiles[currentUser][coll][k]) state.profiles[currentUser][coll][k] = [];
     entry.id = Date.now();
     state.profiles[currentUser][coll][k].push(entry);
@@ -1408,34 +1307,30 @@
 
   // ----- Compartido -----
   function getSharedEgresos() { return state.shared.egresos[keyOf(current)] || []; }
-  function addSharedEgreso(entry, overrideKey) {
-    const k = overrideKey || keyOf(current);
+  function addSharedEgreso(entry) {
+    const k = keyOf(current);
     if (!state.shared.egresos[k]) state.shared.egresos[k] = [];
     entry.id = Date.now();
-    entry.by = currentUser;
     state.shared.egresos[k].push(entry);
-    if (entry.cuenta) linkSharedToCuenta(entry.id, entry.cuenta, entry, k);
+    if (entry.cuenta) linkSharedToCuenta(entry.id, entry.cuenta, entry);
     saveState();
   }
-  function removeSharedEgreso(id, overrideKey) {
-    const k = overrideKey || keyOf(current);
+  function removeSharedEgreso(id) {
+    const k = keyOf(current);
     if (!state.shared.egresos[k]) return;
     state.shared.egresos[k] = state.shared.egresos[k].filter(e => e.id !== id);
     for (const c of (state.shared.cuentas || [])) if (c.egresos) c.egresos = c.egresos.filter(x => x.shared !== id);
     saveState();
   }
 
-  function sharedMesIdx(k) {
-    if (k) { const mm = /^(\d{4})-(\d{2})$/.exec(k); return mm ? monthIdx(Number(mm[1]), Number(mm[2])) : 0; }
-    return Math.max(0, monthIdx(current.y, current.m + 1));
-  }
-  function linkSharedToCuenta(sharedId, cuentaId, e, overrideKey) {
+  function sharedMesIdx() { return Math.max(0, monthIdx(current.y, current.m + 1)); }
+  function linkSharedToCuenta(sharedId, cuentaId, e) {
     for (const c of (state.shared.cuentas || [])) if (c.egresos) c.egresos = c.egresos.filter(x => x.shared !== sharedId);
     if (!cuentaId || !e) return;
     const c = (state.shared.cuentas || []).find(x => x.id === cuentaId);
     if (!c) return;
     if (!c.egresos) c.egresos = [];
-    c.egresos.push({ id: Date.now(), desc: e.desc, monto: Number(e.monto) || 0, cat: e.cat || null, mes: sharedMesIdx(overrideKey), shared: sharedId });
+    c.egresos.push({ id: Date.now(), desc: e.desc, monto: Number(e.monto) || 0, cat: e.cat || null, mes: sharedMesIdx(), shared: sharedId });
   }
   function reconcileSharedCuentas(s) {
     for (const k in (s.shared.egresos || {})) {
@@ -1567,28 +1462,6 @@
     document.getElementById('seCategoria').innerHTML = mk(cats('egresos'));
   }
 
-  function fillMonthFormSelects() {
-    const months = [];
-    const now = new Date();
-    const startY = 2025, startM = 1;
-    let y = startY, m = startM;
-    while (y < now.getFullYear() + 1) {
-      const k = y + '-' + String(m).padStart(2, '0');
-      months.push({ k, label: MONTHS[m - 1] + ' ' + y });
-      m++;
-      if (m > 12) { m = 1; y++; }
-      if (y > now.getFullYear() || (y === now.getFullYear() && m > now.getMonth() + 1)) break;
-    }
-    months.reverse();
-    const mkOpts = months.map(x => '<option value="' + x.k + '">' + x.label + '</option>').join('');
-    const egSel = document.getElementById('egMonthSel');
-    const seSel = document.getElementById('seMonthSel');
-    if (egSel) egSel.innerHTML = '<option value="">Mes actual</option>' + mkOpts;
-    if (seSel) seSel.innerHTML = '<option value="">Mes actual</option>' + mkOpts;
-    if (egSel) egSel.value = '';
-    if (seSel) seSel.value = '';
-  }
-
   function fillCuentaSelect() {
     const el = document.getElementById('seCuenta');
     if (!el) return;
@@ -1650,7 +1523,6 @@
     const p = state.profiles[name];
     if (!p || p.passwordHash !== hashStr(pass)) return false;
     currentUser = name;
-    localStorage.setItem('gastosPareja_session', name);
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     document.getElementById('userName').textContent = name;
@@ -1659,14 +1531,12 @@
     planMonth = current.m + 1;
     planYear = Math.max(PLAN_START_Y, currentYear());
     fillSelects();
-    fillMonthFormSelects();
     render();
     return true;
   }
 
   function logout() {
     currentUser = null;
-    localStorage.removeItem('gastosPareja_session');
     document.getElementById('app').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
     document.getElementById('formCreate').classList.add('hidden');
@@ -1687,31 +1557,8 @@
     const balance = ing - eg;
 
     document.getElementById('cEgresos').textContent = money(eg);
-    document.getElementById('cBalance').textContent = money(eg);
-    document.getElementById('cBalance').style.color = '';
-    const prevM = current.m === 0 ? 11 : current.m - 1;
-    const prevY = current.m === 0 ? current.y - 1 : current.y;
-    const prevKey = prevY + '-' + String(prevM + 1).padStart(2, '0');
-    const prevEg = ((state.profiles[currentUser] && state.profiles[currentUser].egresos) || {})[prevKey] || [];
-    const prevTotal = prevEg.reduce((a, e) => a + (Number(e.monto) || 0), 0);
-    const diff = eg - prevTotal;
-    const deltaEl = document.getElementById('cBalanceDelta');
-    if (prevTotal > 0 || eg > 0) {
-      const pct = prevTotal > 0 ? Math.round(diff / prevTotal * 100) : null;
-      if (diff > 0) {
-        deltaEl.textContent = '+ ' + money(diff) + ' vs mes anterior' + (pct !== null ? ' (+' + pct + '%)' : '');
-        deltaEl.style.color = 'var(--red)';
-      } else if (diff < 0) {
-        deltaEl.textContent = '− ' + money(Math.abs(diff)) + ' vs mes anterior' + (pct !== null ? ' (' + pct + '%)' : '');
-        deltaEl.style.color = 'var(--green)';
-      } else {
-        deltaEl.textContent = 'Igual que el mes anterior';
-        deltaEl.style.color = 'var(--muted)';
-      }
-    } else {
-      deltaEl.textContent = prevTotal === 0 && eg === 0 ? 'Sin datos para comparar' : '';
-      deltaEl.style.color = 'var(--muted)';
-    }
+    document.getElementById('cBalance').textContent = money(balance);
+    document.getElementById('cBalance').style.color = balance < 0 ? 'var(--red)' : '';
     document.getElementById('cCompartido').textContent = money(comp);
     document.getElementById('cPlanMes').textContent = money(planMonthTotal(monthIdx(current.y, current.m + 1)));
     const esp = cuentaEspositos();
@@ -1719,23 +1566,16 @@
     document.getElementById('cAhorroSrc').textContent = br ? '· ' + esc(esp.name) + ' · ' + money(br.inicial) + ' + ' + money(br.acumulado) : '';
     document.getElementById('cAhorro').textContent = money(accumulatedAhorro());
 
-    const egFilterKey = egMonthFilter || keyOf(current);
-    const egFiltered = (state.profiles[currentUser] && state.profiles[currentUser].egresos && state.profiles[currentUser].egresos[egFilterKey]) || [];
-    document.getElementById('sumEgresos').textContent = money(egFiltered.reduce((a, e) => a + e.monto, 0));
-    document.getElementById('countEgresos').textContent = egFiltered.length;
+    document.getElementById('sumEgresos').textContent = money(eg);
+    document.getElementById('countEgresos').textContent = getMy('egresos').length;
 
-    const seFilterKey = seMonthFilter || keyOf(current);
-    const seFiltered = (state.shared.egresos[seFilterKey]) || [];
-    document.getElementById('sumSharedEgresos').textContent = money(seFiltered.reduce((a, e) => a + e.monto, 0));
-    document.getElementById('countSharedEgresos').textContent = seFiltered.length;
+    const se = getSharedEgresos();
+    document.getElementById('sumSharedEgresos').textContent = money(sum(se));
+    document.getElementById('countSharedEgresos').textContent = se.length;
 
-    populateMonthFilters();
     fillCuentaSelect();
     renderEgresos();
     renderShared();
-    renderMonthCompChart();
-    renderEgresosChart();
-    renderSharedChart();
     renderPlan();
     renderPlanDefs();
     renderCuentasDefs();
@@ -1745,36 +1585,13 @@
     renderCuentas();
   }
 
-  function populateMonthFilters() {
-    const egMonths = getMonthsWithData(state.profiles[currentUser] && state.profiles[currentUser].egresos);
-    const seMonths = getMonthsWithData(state.shared.egresos);
-    const egSel = document.getElementById('egMonthFilter');
-    const seSel = document.getElementById('seMonthFilter');
-    const egPrev = egSel.value;
-    const sePrev = seSel.value;
-    egSel.innerHTML = '<option value="">Mes actual (' + MONTHS[current.m] + ')</option>' + egMonths.map(k => {
-      const [y, m] = k.split('-');
-      return '<option value="' + k + '">' + MONTHS[Number(m) - 1] + ' ' + y + '</option>';
-    }).join('');
-    seSel.innerHTML = '<option value="">Mes actual (' + MONTHS[current.m] + ')</option>' + seMonths.map(k => {
-      const [y, m] = k.split('-');
-      return '<option value="' + k + '">' + MONTHS[Number(m) - 1] + ' ' + y + '</option>';
-    }).join('');
-    if (egMonths.includes(egPrev)) egSel.value = egPrev; else { egSel.value = ''; egMonthFilter = ''; }
-    if (seMonths.includes(sePrev)) seSel.value = sePrev; else { seSel.value = ''; seMonthFilter = ''; }
-  }
-
   function renderEgresos() {
-    const filterKey = egMonthFilter || keyOf(current);
-    const profile = state.profiles[currentUser];
-    const list = (profile && profile.egresos && profile.egresos[filterKey]) || [];
+    const list = getMy('egresos');
     const el = document.getElementById('listEgresos');
     if (!list.length) { el.innerHTML = '<div class="empty">Sin gastos personales este mes. (Marcá "Compartido" para que aparezca en la pestaña Nuestros gastos)</div>'; return; }
-    const [fy, fm] = filterKey.split('-');
-    const monthLabel = MONTHS[Number(fm) - 1] + ' ' + fy;
     el.innerHTML = list.map(e => `
       <div class="row">
-        <span>${esc(e.desc)} <span class="tag expense">${esc(e.cat)}</span> <span style="color:var(--muted);font-size:.75rem">📅 ${monthLabel}</span></span>
+        <span>${esc(e.desc)} <span class="tag expense">${esc(e.cat)}</span></span>
         <span class="amount red">-${money(e.monto)}</span>
         <span style="color:var(--muted);font-size:.85rem">${fmtDate(e.id)}</span>
         <button class="del" data-coll="egresos" data-id="${e.id}" title="Eliminar">✕</button>
@@ -1782,38 +1599,20 @@
   }
 
   function renderShared() {
-    const filterKey = seMonthFilter || keyOf(current);
-    const list = (state.shared.egresos[filterKey]) || [];
+    const list = getSharedEgresos();
     const el = document.getElementById('listSharedEgresos');
     const cuentas = state.shared.cuentas || [];
-    const catsList = cats('egresos');
     const selOpts = '<option value="">Sin cuenta</option>' + cuentas.map(c => '<option value="' + esc(c.id) + '">' + esc(c.name) + '</option>').join('');
-    const catOpts = catsList.map(c => '<option value="' + esc(c) + '">' + esc(c) + '</option>').join('');
     if (!list.length) { el.innerHTML = '<div class="empty">Sin gastos nuestros este mes.</div>'; return; }
-    const [fy, fm] = filterKey.split('-');
-    const monthLabel = MONTHS[Number(fm) - 1] + ' ' + fy;
-    el.innerHTML = list.map(e => {
-      const catSel = catOpts.replace('value="' + esc(e.cat) + '"', 'value="' + esc(e.cat) + '" selected');
-      const isMine = e.by === currentUser;
-      const byLabel = e.by ? '<span class="tag" style="background:rgba(56,189,248,.15);color:var(--blue);font-size:.7rem">' + esc(e.by) + '</span>' : '';
-      const pagoVal = e.pago || 'Compartido';
-      const pagoOpts = '<option value="Giancarlo ML"' + (pagoVal === 'Giancarlo ML' ? ' selected' : '') + '>Giancarlo</option>' +
-        '<option value="Thali"' + (pagoVal === 'Thali' ? ' selected' : '') + '>Thali</option>' +
-        '<option value="Compartido"' + (pagoVal === 'Compartido' ? ' selected' : '') + '>Compartido</option>';
-      return `
+    el.innerHTML = list.map(e => `
       <div class="row">
-        <span>${esc(e.desc)}
-          ${byLabel}
-          <select data-shared-pago="${e.id}" style="width:auto;padding:4px 6px;font-size:.78rem;margin-top:4px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px">${pagoOpts}</select>
-          <span style="color:var(--muted);font-size:.75rem">📅 ${monthLabel}</span>
-          <select data-shared-cat="${e.id}" style="width:auto;padding:4px 6px;font-size:.78rem;margin-top:4px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px">${catSel}</select>
+        <span>${esc(e.desc)} <span class="tag shared">${esc(e.cat)}</span>
           ${cuentas.length ? '<select data-shared-cuenta="' + e.id + '" style="width:auto;padding:4px 6px;font-size:.8rem;margin-top:6px">' + selOpts.replace('<option value="' + esc(e.cuenta || '') + '">', '<option value="' + esc(e.cuenta || '') + '" selected>') + '</select>' : ''}
         </span>
         <span class="amount purple">-${money(e.monto)}</span>
         <span style="color:var(--muted);font-size:.85rem">${e.cuenta ? '→ ' + esc(cuentaName(e.cuenta)) : ''}</span>
-        ${isMine ? '<button class="del" data-coll="shared" data-id="' + e.id + '" title="Eliminar">✕</button>' : '<span style="color:var(--muted);font-size:.7rem">🔒</span>'}
-      </div>`;
-    }).join('');
+        <button class="del" data-coll="shared" data-id="${e.id}" title="Eliminar">✕</button>
+      </div>`).join('');
   }
 
   function renderSplit() {
@@ -2060,11 +1859,10 @@
     const cat = this.querySelector('#egCategoria').value;
     const monto = Number(this.querySelector('#egMonto').value);
     const compartido = this.querySelector('#egCompartido').checked;
-    const mk = this.querySelector('#egMonthSel').value || null;
     if (compartido) {
-      addSharedEgreso({ desc, cat, monto }, mk);
+      addSharedEgreso({ desc, cat, monto });
     } else {
-      addMy('egresos', { desc, cat, monto }, mk);
+      addMy('egresos', { desc, cat, monto });
     }
     this.reset();
     render();
@@ -2073,38 +1871,20 @@
   document.getElementById('formSharedEgreso').addEventListener('submit', function (e) {
     e.preventDefault();
     const cuentaEl = document.getElementById('seCuenta');
-    const mk = this.querySelector('#seMonthSel').value || null;
     addSharedEgreso({
       desc: this.querySelector('#seDesc').value.trim(),
       cat: this.querySelector('#seCategoria').value,
       monto: Number(this.querySelector('#seMonto').value),
-      pago: this.querySelector('#sePago').value,
       cuenta: cuentaEl ? (cuentaEl.value || null) : null
-    }, mk);
+    });
     this.reset();
     render();
   });
 
   document.getElementById('listSharedEgresos').addEventListener('change', function (e) {
-    const selPago = e.target.closest('[data-shared-pago]');
-    if (selPago) {
-      const k = seMonthFilter || keyOf(current);
-      const list = state.shared.egresos[k] || [];
-      const ex = list.find(x => x.id === Number(selPago.dataset.sharedPago));
-      if (ex) { ex.pago = selPago.value; saveState(); render(); }
-      return;
-    }
-    const selCat = e.target.closest('[data-shared-cat]');
-    if (selCat) {
-      const k = seMonthFilter || keyOf(current);
-      const list = state.shared.egresos[k] || [];
-      const ex = list.find(x => x.id === Number(selCat.dataset.sharedCat));
-      if (ex) { ex.cat = selCat.value; saveState(); render(); }
-      return;
-    }
     const sel = e.target.closest('[data-shared-cuenta]');
     if (!sel) return;
-    const k = seMonthFilter || keyOf(current);
+    const k = keyOf(current);
     const list = state.shared.egresos[k] || [];
     const ex = list.find(x => x.id === Number(sel.dataset.sharedCuenta));
     if (!ex) return;
@@ -2114,36 +1894,13 @@
     render();
   });
 
-  // ----- Month filter events -----
-  document.getElementById('egMonthFilter').addEventListener('change', function () {
-    egMonthFilter = this.value;
-    render();
-  });
-  document.getElementById('seMonthFilter').addEventListener('change', function () {
-    seMonthFilter = this.value;
-    render();
-  });
-
   // ----- Delete buttons -----
   document.addEventListener('click', function (e) {
     const del = e.target.closest('.del');
     if (!del) return;
     const id = Number(del.dataset.id);
-    if (del.dataset.coll === 'egresos') {
-      const k = egMonthFilter || keyOf(current);
-      const profile = state.profiles[currentUser];
-      if (profile && profile.egresos && profile.egresos[k]) {
-        profile.egresos[k] = profile.egresos[k].filter(e => e.id !== id);
-        saveState();
-      }
-    }
-    else if (del.dataset.coll === 'shared') {
-      const k = seMonthFilter || keyOf(current);
-      const sList = (state.shared.egresos[k]) || [];
-      const target = sList.find(x => x.id === id);
-      if (target && target.by && target.by !== currentUser) return;
-      removeSharedEgreso(id, k);
-    }
+    if (del.dataset.coll === 'egresos') removeMy('egresos', id);
+    else if (del.dataset.coll === 'shared') removeSharedEgreso(id);
     render();
   });
 
@@ -2307,24 +2064,6 @@
     disconnectRemote();
   });
 
-  document.getElementById('btnExportData').addEventListener('click', function () {
-    const msg = document.getElementById('exportMsg');
-    try {
-      const json = JSON.stringify(state, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'backup.json';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      msg.textContent = '✅ Descargado. Guardá el archivo en la carpeta del proyecto.';
-      msg.style.color = 'var(--green)';
-    } catch (e) {
-      msg.textContent = 'Error: ' + e.message;
-      msg.style.color = 'var(--red)';
-    }
-  });
-
   document.getElementById('btnPctIgual').addEventListener('click', function () {
     const names = profileList();
     if (!names.length) return;
@@ -2432,7 +2171,7 @@
         ${open ? renderCuentaDetail(d.c) : ''}
       </div>`;
     }).join('');
-    renderMonthCompChart();
+    renderCuentasChart();
   }
 
   function cuentasFlujoMes(idx) {
@@ -2448,225 +2187,30 @@
     return { ing, eg };
   }
 
-  function renderMonthCompChart() {
-    const el = document.getElementById('monthCompChart');
+  function renderCuentasChart() {
+    const el = document.getElementById('cuentasChart');
     if (!el) return;
-    const curKey = keyOf(current);
-    const prevM = current.m === 0 ? 11 : current.m - 1;
-    const prevY = current.m === 0 ? current.y - 1 : current.y;
-    const prevKey = prevY + '-' + String(prevM + 1).padStart(2, '0');
-    const allCats = new Set();
-    const currByCat = {}, prevByCat = {};
-    const egProfiles = state.profiles[currentUser] || {};
-    const allEg = [egProfiles.egresos || {}, state.shared.egresos || {}];
-    for (const src of allEg) {
-      for (const e of (src[curKey] || [])) { currByCat[e.cat] = (currByCat[e.cat] || 0) + (Number(e.monto) || 0); allCats.add(e.cat); }
-      for (const e of (src[prevKey] || [])) { prevByCat[e.cat] = (prevByCat[e.cat] || 0) + (Number(e.monto) || 0); allCats.add(e.cat); }
+    const lbl = document.getElementById('cuentasChartYear');
+    if (lbl) lbl.textContent = 'año ' + planYear;
+    const data = planYearMonths(planYear).map(x => ({ x, ...cuentasFlujoMes(x.idx) }));
+    const max = Math.max(1, ...data.map(d => Math.max(d.ing, d.eg)));
+    const empty = data.every(d => d.ing === 0 && d.eg === 0);
+    if (empty) {
+      el.innerHTML = '<div class="empty">Aún no hay movimientos entre el plan y las cuentas en ' + planYear + '.</div>';
+      return;
     }
-    const cats = [...allCats].sort((a, b) => (currByCat[b] || 0) - (currByCat[a] || 0));
-    if (!cats.length) { el.innerHTML = '<div class="empty">Sin datos para comparar.</div>'; return; }
-    const maxVal = Math.max(1, ...cats.map(c => Math.max(currByCat[c] || 0, prevByCat[c] || 0)));
-    const BAR_H = 120;
-    const colorMap = {};
-    cats.forEach((c, i) => colorMap[c] = CAT_COLORS[i % CAT_COLORS.length]);
-    let html = '<div class="comp-legend">';
-    html += '<span><i style="background:rgba(148,163,184,.25);border:1px solid rgba(148,163,184,.3)"></i> Mes anterior</span>';
-    html += cats.map(c => '<span><i style="background:' + colorMap[c] + '"></i> ' + esc(c) + '</span>').join('');
-    html += '</div>';
-    html += '<div class="comp-chart">';
-    for (const c of cats) {
-      const cv = currByCat[c] || 0, pv = prevByCat[c] || 0;
-      const ch = Math.max(2, Math.round(cv / maxVal * BAR_H));
-      const ph = Math.max(2, Math.round(pv / maxVal * BAR_H));
-      const col = colorMap[c];
-      const lightCol = col + '33';
-      const diff = cv - pv;
-      const pct = pv > 0 ? Math.round(diff / pv * 100) : null;
-      let diffLabel = '';
-      if (pv === 0 && cv > 0) diffLabel = '<span style="color:#22c55e">● nuevo</span>';
-      else if (cv === 0 && pv > 0) diffLabel = '<span style="color:var(--red)">● sin datos</span>';
-      else if (diff > 0) diffLabel = '<span style="color:var(--red)">▲ +' + (pct !== null ? pct + '%' : '') + '</span>';
-      else if (diff < 0) diffLabel = '<span style="color:#22c55e">▼ ' + (pct !== null ? pct + '%' : '') + '</span>';
-      else diffLabel = '<span style="color:var(--muted)">=</span>';
-      html += '<div class="comp-col"><div class="comp-bars" style="height:' + BAR_H + 'px">';
-      html += '<div class="comp-bar" style="height:' + ph + 'px;background:' + lightCol + ';border:1px solid ' + col + '30"><span class="tip">' + esc(c) + ' (ant.): ' + money(pv) + '</span></div>';
-      html += '<div class="comp-bar" style="height:' + ch + 'px;background:' + col + ';box-shadow:0 0 6px ' + col + '55"><span class="tip">' + esc(c) + ' (actual): ' + money(cv) + '</span></div>';
-      html += '</div>';
-      html += '<div class="comp-val" style="color:' + col + '">' + money(cv) + '</div>';
-      html += '<div class="comp-lbl"><b>' + esc(c) + '</b></div>';
-      html += diffLabel;
-      html += '</div>';
-    }
-    html += '</div>';
-    el.innerHTML = html;
-  }
-
-  const CAT_COLORS = ['#f472b6','#a78bfa','#38bdf8','#22c55e','#f59e0b','#ef4444','#6366f1','#14b8a6','#f97316','#ec4899','#8b5cf6','#06b6d4'];
-
-  function buildCatChart(data, el) {
-    const cats = {};
-    const monthKeys = Object.keys(data).sort();
-    for (const k of monthKeys) {
-      for (const e of (data[k] || [])) {
-        cats[e.cat] = (cats[e.cat] || 0) + (Number(e.monto) || 0);
-      }
-    }
-    const catNames = Object.keys(cats).sort((a, b) => cats[b] - cats[a]);
-    if (!catNames.length || !monthKeys.length) { el.innerHTML = '<div class="empty">Sin datos para graficar.</div>'; return; }
-    const colorMap = {};
-    catNames.forEach((c, i) => colorMap[c] = CAT_COLORS[i % CAT_COLORS.length]);
-    const monthData = monthKeys.map(k => {
-      const items = data[k] || [];
-      const total = items.reduce((a, e) => a + (Number(e.monto) || 0), 0);
-      const byCat = {};
-      for (const e of items) byCat[e.cat] = (byCat[e.cat] || 0) + (Number(e.monto) || 0);
-      return { k, total, byCat };
-    });
-    const maxTotal = Math.max(1, ...monthData.map(d => d.total));
-    const STACK_H = 130;
-    let html = '<div class="cat-legend">' + catNames.map(c => '<span class="cl"><span class="cl-dot" style="background:' + colorMap[c] + '"></span>' + esc(c) + ' (' + money(cats[c]) + ')</span>').join('') + '</div>';
-    html += '<div class="cat-chart-wrap">';
-    for (const d of monthData) {
-      const [y, m] = d.k.split('-');
-      const barH = Math.max(4, Math.round(d.total / maxTotal * STACK_H));
-      let stackHtml = '';
-      for (const c of catNames) {
-        const v = d.byCat[c] || 0;
-        if (!v) continue;
-        const segH = Math.max(2, Math.round(v / d.total * barH));
-        stackHtml += '<div class="cat-chart-seg" style="height:' + segH + 'px;background:' + colorMap[c] + '"><span class="tip">' + esc(c) + ': ' + money(v) + '</span></div>';
-      }
-      if (!stackHtml) stackHtml = '<div class="cat-chart-seg" style="height:2px;background:var(--border)"></div>';
-      html += '<div class="cat-chart-col"><div class="cat-chart-stack" style="height:' + barH + 'px">' + stackHtml + '</div><div class="cat-chart-lbl"><b>' + MONTHS[Number(m) - 1].slice(0, 3) + '</b></div><div class="cat-chart-total">' + money(d.total) + '</div></div>';
-    }
-    html += '</div>';
-    el.innerHTML = html;
-  }
-
-  function buildPivotTable(data, el) {
-    const monthKeys = Object.keys(data).sort();
-    const cats = {};
-    for (const k of monthKeys) {
-      for (const e of (data[k] || [])) {
-        if (!cats[e.cat]) cats[e.cat] = {};
-        cats[e.cat][k] = (cats[e.cat][k] || 0) + (Number(e.monto) || 0);
-      }
-    }
-    const catNames = Object.keys(cats).sort((a, b) => {
-      const sa = monthKeys.reduce((s, k) => s + (cats[a][k] || 0), 0);
-      const sb = monthKeys.reduce((s, k) => s + (cats[b][k] || 0), 0);
-      return sb - sa;
-    });
-    if (!catNames.length || !monthKeys.length) { el.innerHTML = ''; return; }
-    let html = '<table class="pivot-table"><thead><tr><th>Categoría</th>';
-    const monthTotals = {};
-    const catGrand = {};
-    for (const k of monthKeys) {
-      const [y, m] = k.split('-');
-      html += '<th>' + MONTHS[Number(m) - 1].slice(0, 3) + ' ' + y + '</th>';
-      monthTotals[k] = 0;
-    }
-    html += '<th>Total</th></tr></thead><tbody>';
-    for (const c of catNames) {
-      html += '<tr><td>' + esc(c) + '</td>';
-      let rowTotal = 0;
-      for (const k of monthKeys) {
-        const v = cats[c][k] || 0;
-        rowTotal += v;
-        monthTotals[k] += v;
-        html += '<td' + (!v ? ' class="empty-cell"' : '') + '>' + (v ? money(v) : '—') + '</td>';
-      }
-      catGrand[c] = rowTotal;
-      html += '<td>' + money(rowTotal) + '</td></tr>';
-    }
-    html += '<tr><td>Total</td>';
-    let grand = 0;
-    for (const k of monthKeys) { grand += monthTotals[k]; html += '<td>' + money(monthTotals[k]) + '</td>'; }
-    html += '<td>' + money(grand) + '</td></tr></tbody></table>';
-    el.innerHTML = html;
-  }
-
-  function buildSharedPivotTable(data, el) {
-    const monthKeys = Object.keys(data).sort();
-    const gianPct = pctFor('Giancarlo ML');
-    const thalPct = pctFor('Thali');
-    const byCatMonth = {};
-    for (const k of monthKeys) {
-      for (const e of (data[k] || [])) {
-        if (!byCatMonth[e.cat]) byCatMonth[e.cat] = {};
-        if (!byCatMonth[e.cat][k]) byCatMonth[e.cat][k] = { total: 0, gian: 0, thali: 0 };
-        const monto = Number(e.monto) || 0;
-        const pago = e.pago || 'Compartido';
-        byCatMonth[e.cat][k].total += monto;
-        if (pago === 'Giancarlo ML') {
-          byCatMonth[e.cat][k].gian += monto;
-        } else if (pago === 'Thali') {
-          byCatMonth[e.cat][k].thali += monto;
-        } else {
-          byCatMonth[e.cat][k].gian += Math.round(monto * gianPct / 100 * 100) / 100;
-          byCatMonth[e.cat][k].thali += Math.round(monto * thalPct / 100 * 100) / 100;
-        }
-      }
-    }
-    const catNames = Object.keys(byCatMonth).sort((a, b) => {
-      const sa = monthKeys.reduce((s, k) => s + ((byCatMonth[a][k] || {}).total || 0), 0);
-      const sb = monthKeys.reduce((s, k) => s + ((byCatMonth[b][k] || {}).total || 0), 0);
-      return sb - sa;
-    });
-    if (!catNames.length || !monthKeys.length) { el.innerHTML = ''; return; }
-    let html = '<table class="pivot-table"><thead><tr><th>Categoría</th>';
-    for (const k of monthKeys) {
-      const [y, m] = k.split('-');
-      html += '<th>' + MONTHS[Number(m) - 1].slice(0, 3) + ' ' + y + '</th>';
-    }
-    html += '<th>Total</th></tr></thead><tbody>';
-    const monthGTotals = {}, monthTTotals = {};
-    for (const k of monthKeys) { monthGTotals[k] = 0; monthTTotals[k] = 0; }
-    let grandG = 0, grandT = 0;
-    for (const c of catNames) {
-      html += '<tr><td style="font-weight:700">' + esc(c) + '</td>';
-      let rowG = 0, rowT = 0;
-      for (const k of monthKeys) {
-        const d = byCatMonth[c][k] || { total: 0, gian: 0, thali: 0 };
-        const g = Math.round(d.gian * 100) / 100;
-        const t = Math.round(d.thali * 100) / 100;
-        rowG += g; rowT += t;
-        monthGTotals[k] += g; monthTTotals[k] += t;
-        if (d.total > 0) {
-          html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(g) + '</span><br><span class="thali" style="color:var(--rose)">' + money(t) + '</span></td>';
-        } else {
-          html += '<td class="empty-cell">—</td>';
-        }
-      }
-      grandG += rowG; grandT += rowT;
-      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(rowG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(rowT) + '</span></td></tr>';
-    }
-    html += '<tr><td style="font-weight:700">Total</td>';
-    for (const k of monthKeys) {
-      html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(monthGTotals[k]) + '</span><br><span class="thali" style="color:var(--rose)">' + money(monthTTotals[k]) + '</span></td>';
-    }
-    html += '<td style="font-size:.75rem;line-height:1.4"><span class="gian" style="color:var(--blue)">' + money(grandG) + '</span><br><span class="thali" style="color:var(--rose)">' + money(grandT) + '</span></td></tr></tbody></table>';
-    html += '<div style="margin-top:8px;font-size:.78rem"><span style="color:var(--blue)">● Giancarlo paga</span> <span style="color:var(--rose);margin-left:12px">● Thali paga</span></div>';
-    el.innerHTML = html;
-  }
-
-  function renderEgresosChart() {
-    const el = document.getElementById('egresosChart');
-    if (!el) return;
-    const profile = state.profiles[currentUser];
-    const data = (profile && profile.egresos) || {};
-    buildCatChart(data, el);
-    const pivEl = document.getElementById('egresosPivot');
-    if (pivEl) buildPivotTable(data, pivEl);
-  }
-
-  function renderSharedChart() {
-    const el = document.getElementById('sharedChart');
-    if (!el) return;
-    const data = state.shared.egresos || {};
-    buildCatChart(data, el);
-    const pivEl = document.getElementById('sharedPivot');
-    if (pivEl) buildSharedPivotTable(data, pivEl);
+    el.innerHTML = '<div class="chart-wrap">' + data.map(d => {
+      const ih = Math.max(2, Math.round(d.ing / max * 120));
+      const eh = Math.max(2, Math.round(d.eg / max * 120));
+      const net = d.ing - d.eg;
+      return '<div class="chart-group" title="' + MONTHS[d.x.m - 1] + ' ' + planYear + ' · Ingresos ' + money(d.ing) + ' · Egresos ' + money(d.eg) + ' · Neto ' + money(net) + '">' +
+        '<div class="chart-bars">' +
+        '<div class="chart-bar in" style="height:' + ih + 'px"><span class="tip">+ ' + money(d.ing) + '</span></div>' +
+        '<div class="chart-bar out" style="height:' + eh + 'px"><span class="tip">− ' + money(d.eg) + '</span></div>' +
+        '</div>' +
+        '<div class="chart-mlbl"><b>' + MONTHS[d.x.m - 1].slice(0, 3) + '</b><span class="in">' + fmtNum(d.ing) + '</span><span class="out">' + fmtNum(d.eg) + '</span></div>' +
+        '</div>';
+    }).join('') + '</div>';
   }
 
   function renderDeudaCloud() {
