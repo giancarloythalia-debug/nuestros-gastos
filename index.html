@@ -321,16 +321,15 @@
   .pago-table td.gian { color: var(--blue); }
   .pago-table td.thali { color: var(--rose); }
   .pago-table td.comp { color: var(--amber); }
-  .comp-chart { display: flex; align-items: flex-end; gap: 12px; padding: 14px 4px 0; min-height: 160px; }
-  .comp-col { flex: 1; min-width: 50px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .comp-bars { display: flex; align-items: flex-end; gap: 3px; width: 100%; }
-  .comp-bar { flex: 1; border-radius: 4px 4px 0 0; position: relative; min-height: 2px; transition: height .4s ease; }
-  .comp-bar.prev { background: rgba(148,163,184,.35); border: 1px solid rgba(148,163,184,.3); }
-  .comp-bar.curr { background: linear-gradient(180deg, var(--purple), #9333ea); box-shadow: 0 0 8px rgba(147,51,234,.3); }
+  .comp-chart { display: flex; align-items: flex-end; gap: 6px; padding: 14px 2px 0; min-height: 160px; }
+  .comp-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .comp-bars { display: flex; align-items: flex-end; gap: 2px; width: 100%; }
+  .comp-bar { flex: 1; border-radius: 3px 3px 0 0; position: relative; min-height: 2px; }
   .comp-bar .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; font-size: .66rem; font-weight: 700; padding: 3px 7px; border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s; z-index: 6; }
   .comp-bar:hover .tip { opacity: 1; }
-  .comp-lbl { font-size: .72rem; color: var(--muted); text-align: center; margin-top: 4px; }
-  .comp-lbl b { display: block; color: var(--text); font-size: .78rem; font-weight: 800; }
+  .comp-val { font-size: .65rem; font-weight: 700; white-space: nowrap; text-align: center; }
+  .comp-lbl { font-size: .65rem; color: var(--muted); text-align: center; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .comp-lbl b { display: block; color: var(--text); font-size: .72rem; font-weight: 800; }
   .comp-legend { display: flex; gap: 16px; padding: 8px 4px; font-size: .78rem; color: var(--muted); }
   .comp-legend span { display: inline-flex; align-items: center; gap: 5px; }
   .comp-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
@@ -516,7 +515,7 @@
 
   <div class="card" style="margin-bottom:16px">
     <div class="t">📊 Gastos por categoría: este mes vs anterior</div>
-    <div id="monthCompChart" style="overflow-x:auto"></div>
+    <div id="monthCompChart"></div>
   </div>
 
   <div class="tabs">
@@ -2450,26 +2449,35 @@
     if (!cats.length) { el.innerHTML = '<div class="empty">Sin datos para comparar.</div>'; return; }
     const maxVal = Math.max(1, ...cats.map(c => Math.max(currByCat[c] || 0, prevByCat[c] || 0)));
     const BAR_H = 120;
-    let html = '<div class="comp-legend"><span><i style="background:rgba(148,163,184,.35);border:1px solid rgba(148,163,184,.3)"></i> Mes anterior</span><span><i style="background:linear-gradient(180deg,var(--purple),#9333ea)"></i> Este mes</span></div>';
+    const colorMap = {};
+    cats.forEach((c, i) => colorMap[c] = CAT_COLORS[i % CAT_COLORS.length]);
+    let html = '<div class="comp-legend">';
+    html += '<span><i style="background:rgba(148,163,184,.25);border:1px solid rgba(148,163,184,.3)"></i> Mes anterior</span>';
+    html += cats.map(c => '<span><i style="background:' + colorMap[c] + '"></i> ' + esc(c) + '</span>').join('');
+    html += '</div>';
     html += '<div class="comp-chart">';
     for (const c of cats) {
       const cv = currByCat[c] || 0, pv = prevByCat[c] || 0;
       const ch = Math.max(2, Math.round(cv / maxVal * BAR_H));
       const ph = Math.max(2, Math.round(pv / maxVal * BAR_H));
+      const col = colorMap[c];
+      const lightCol = col + '33';
       const diff = cv - pv;
       const pct = pv > 0 ? Math.round(diff / pv * 100) : null;
       let diffLabel = '';
-      if (pv === 0 && cv > 0) diffLabel = '● nuevo';
-      else if (cv === 0 && pv > 0) diffLabel = '● eliminado';
-      else if (diff > 0) diffLabel = '▲ +' + (pct !== null ? pct + '%' : '');
-      else if (diff < 0) diffLabel = '▼ ' + (pct !== null ? pct + '%' : '');
-      else diffLabel = '=';
+      if (pv === 0 && cv > 0) diffLabel = '<span style="color:#22c55e">● nuevo</span>';
+      else if (cv === 0 && pv > 0) diffLabel = '<span style="color:var(--red)">● sin datos</span>';
+      else if (diff > 0) diffLabel = '<span style="color:var(--red)">▲ +' + (pct !== null ? pct + '%' : '') + '</span>';
+      else if (diff < 0) diffLabel = '<span style="color:#22c55e">▼ ' + (pct !== null ? pct + '%' : '') + '</span>';
+      else diffLabel = '<span style="color:var(--muted)">=</span>';
       html += '<div class="comp-col"><div class="comp-bars" style="height:' + BAR_H + 'px">';
-      html += '<div class="comp-bar prev" style="height:' + ph + 'px"><span class="tip">' + esc(c) + ' (mes ant.): ' + money(pv) + '</span></div>';
-      html += '<div class="comp-bar curr" style="height:' + ch + 'px"><span class="tip">' + esc(c) + ' (este mes): ' + money(cv) + '</span></div>';
-      html += '</div><div class="comp-lbl"><b>' + esc(c) + '</b></div>';
-      html += '<div style="font-size:.68rem;color:var(--muted)">' + diffLabel + '</div>';
-      html += '<div style="font-size:.68rem">' + money(cv) + '</div></div>';
+      html += '<div class="comp-bar" style="height:' + ph + 'px;background:' + lightCol + ';border:1px solid ' + col + '30"><span class="tip">' + esc(c) + ' (ant.): ' + money(pv) + '</span></div>';
+      html += '<div class="comp-bar" style="height:' + ch + 'px;background:' + col + ';box-shadow:0 0 6px ' + col + '55"><span class="tip">' + esc(c) + ' (actual): ' + money(cv) + '</span></div>';
+      html += '</div>';
+      html += '<div class="comp-val" style="color:' + col + '">' + money(cv) + '</div>';
+      html += '<div class="comp-lbl"><b>' + esc(c) + '</b></div>';
+      html += diffLabel;
+      html += '</div>';
     }
     html += '</div>';
     el.innerHTML = html;
